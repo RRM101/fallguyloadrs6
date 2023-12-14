@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>fallguyloadrold</AssemblyName>
+    <Description>fallguyloadrs6</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>fallguyloadrold</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="6.0.0-be.*" />
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS_Runtime">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\CMS_Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="FMODUnity">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\FMODUnity.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="MT.FGClient">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\MT.FGClient.dll</HintPath>
+    </Reference>
+    <Reference Include="mvvmbindings">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\mvvmbindings.dll</HintPath>
+    </Reference>
+    <Reference Include="ParsingUtils_Runtime">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\ParsingUtils_Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Core">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\Rewired_Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TheMultiplayerGuys.FGCommon">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\TheMultiplayerGuys.FGCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="TheMultiplayerGuys.Utility">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\TheMultiplayerGuys.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
