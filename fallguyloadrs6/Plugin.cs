@@ -56,6 +56,7 @@ namespace fallguyloadrold
             string musicbank;
             string musicevent;
             bool showui = true;
+            bool whatisthis = false;
             GameObject TopBar;
             GameObject MenuBuilder;
             RoundsData roundsData;
@@ -89,6 +90,10 @@ namespace fallguyloadrold
                     random = GUI.Button(new Rect(20f, 70f, 100f, 25f), "load random");
                     listcmsvariations = GUI.Button(new Rect(20f, 130f, 100f, 25f), "CMS Rounds");
                     GUI.Label(new Rect(50f, 165f, 100f, 30f), "v"+version);
+                    if (whatisthis)
+                    {
+                        GUI.Label(new Rect(47f, 185f, 100f, 30f), "Press H");
+                    }
                 }
             }
 
@@ -328,6 +333,15 @@ namespace fallguyloadrold
                 loadingScreen.HideScreen();
             }
 
+            public void EasterEgg()
+            {
+                GameObject easterEgg = Instantiate(fallGuy);
+                FallGuysCharacterController fallGuysCharacterController = easterEgg.GetComponent<FallGuysCharacterController>();
+                fallGuysCharacterController.IsControlledLocally = true;
+                fallGuysCharacterController.IsLocalPlayer = true;
+                CustomisationManager.Instance.ApplyCustomisationsToFallGuy(easterEgg, GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections, -1);
+            }
+
             public void Update()
             {
                 if (Input.GetKeyDown(KeyCode.F1))
@@ -363,6 +377,19 @@ namespace fallguyloadrold
                 if (listcmsvariations)
                 {
                     ListCMSVariations();
+                }
+
+                if (Input.GetKeyDown(KeyCode.F2))
+                {
+                    whatisthis = !whatisthis;
+                }
+
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    if (whatisthis)
+                    {
+                        EasterEgg();
+                    }
                 }
 
                 if (!startPressed)
