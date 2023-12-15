@@ -384,12 +384,9 @@ namespace fallguyloadrold
                     whatisthis = !whatisthis;
                 }
 
-                if (Input.GetKeyDown(KeyCode.H))
+                if (Input.GetKeyDown(KeyCode.H) && whatisthis)
                 {
-                    if (whatisthis)
-                    {
-                        EasterEgg();
-                    }
+                    EasterEgg();
                 }
 
                 if (!startPressed)
