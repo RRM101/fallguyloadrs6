@@ -31,17 +31,6 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool PrefabSpawnerStart(COMMON_PrefabSpawnerBase __instance)
         {
-
-            switch (__instance._preSpawnMode)
-            {
-                case PreSpawnMode.Static:
-                    __instance.PreSpawnStaticObjects();
-                    break;
-                case PreSpawnMode.PlayerRatioed:
-                    __instance.PreSpawnPlayerRatioedObjects(1);
-                    break;
-            }
-
             return false;
         }
 
@@ -90,16 +79,7 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool PrefabSpawnerTimedStart(COMMON_PrefabSpawnerTimed __instance)
         {
-            switch (__instance._preSpawnMode)
-            {
-                case PreSpawnMode.Static:
-                    __instance.PreSpawnStaticObjects();
-                    break;
-                case PreSpawnMode.PlayerRatioed:
-                    __instance.PreSpawnPlayerRatioedObjects(1);
-                    break;
-            }
-            __instance._timeUntilNextSpawn = __instance.initialDelayInSeconds + 5;
+            __instance._timeUntilNextSpawn = __instance.initialDelayInSeconds;
 
             return false;
         }
