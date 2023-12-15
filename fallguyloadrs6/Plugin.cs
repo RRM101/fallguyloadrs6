@@ -20,13 +20,16 @@ using FG.Common;
 using MPG.Utility;
 using System.Collections.Generic;
 using FG.Common.Character.MotorSystem;
+using Levels.Obstacles;
+using FG.Common.LODs;
+using SRF;
 
 namespace fallguyloadrold
 {
     [BepInPlugin("org.rrm1.fallguyloadr.s6", "fallguyloadr", version)]
     public class Plugin : BasePlugin
     {
-        public const string version = "1.0.0";
+        public const string version = "1.1.0";
         public override void Load()
         {
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
@@ -241,15 +244,44 @@ namespace fallguyloadrold
 
             public void FixObstacles()
             {
-                COMMON_Button button = FindObjectOfType<COMMON_Button>();
-
-                if (button != null)
+                COMMON_Button[] buttons = FindObjectsOfType<COMMON_Button>();
+                MPGNetObjectBase[] networkAwareGenericObjects = FindObjectsOfType<MPGNetObjectBase>();
+                List<MPGNetObject> networkAwareMPGNetObjects = new List<MPGNetObject>();
+                COMMON_Pendulum[] pendulums = FindObjectsOfType<COMMON_Pendulum>();
+                    
+                foreach (COMMON_Button button in buttons)
                 {
-                    COMMON_Button[] buttons = FindObjectsOfType<COMMON_Button>();
-                    foreach (COMMON_Button button_ in buttons)
+                    button.gameObject.transform.FindChild("ButtonBody").gameObject.AddComponent<Fixes.ButtonFix>();
+                }
+
+                foreach (MPGNetObjectBase networkAwareGenericObject in networkAwareGenericObjects)
+                {                   
+                    MPGNetObject netObject = networkAwareGenericObject.gameObject.AddComponent<MPGNetObject>();
+                    networkAwareMPGNetObjects.Add(netObject);                    
+                }
+
+                if (networkAwareMPGNetObjects.Count > 0)
+                {
+                    HashSet<int> uniqueIDs = new HashSet<int>();
+                    while (uniqueIDs.Count < networkAwareMPGNetObjects.Count)
                     {
-                        button_.gameObject.transform.FindChild("ButtonBody").gameObject.AddComponent<Fixes.ButtonFix>();
+                        int randomID = UnityEngine.Random.RandomRange(42, 1000);
+                        uniqueIDs.Add(randomID);
                     }
+
+                    int[] uniqueIDArray = uniqueIDs.ToArray();
+
+                    int index = 0;
+                    foreach (MPGNetObject netObject in networkAwareMPGNetObjects)
+                    {
+                        netObject.netID_ = new MPGNetID((uint)uniqueIDArray[index]);
+                        index++;
+                    }
+                }
+
+                foreach (COMMON_Pendulum pendulum in pendulums)
+                {
+                    pendulum.gameObject.RemoveComponentsIfExists<LodController>();
                 }
             }
 

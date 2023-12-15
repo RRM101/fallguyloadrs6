@@ -92,5 +92,18 @@ namespace fallguyloadrold
 
             return false;
         }
+
+        [HarmonyPatch(typeof(COMMON_Pendulum), "Start")]
+        [HarmonyPrefix]
+        static bool PendulumStart(COMMON_Pendulum __instance)
+        {
+            __instance._worldToLocalRotationProjection = Quaternion.Euler(-__instance.transform.rotation.eulerAngles);
+            __instance._localToWorldRotationProjection = Quaternion.Euler(__instance.transform.rotation.eulerAngles);
+            __instance._swingVelocity = __instance.CalcRandomScaledSwingVelocity(__instance._localToWorldRotationProjection * new Vector3(__instance._velocityThreshold, 0f, 0f));
+            __instance._canPush = true;
+            __instance._delay = 0f;
+
+            return false;
+        }
     }
 }
