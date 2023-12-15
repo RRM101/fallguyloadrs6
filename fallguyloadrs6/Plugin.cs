@@ -57,6 +57,7 @@ namespace fallguyloadrold
             string musicevent;
             bool showui = true;
             bool whatisthis = false;
+            uint lastplayernetid;
             GameObject TopBar;
             GameObject MenuBuilder;
             RoundsData roundsData;
@@ -208,6 +209,8 @@ namespace fallguyloadrold
                 fallGuy.GetComponent<FallGuysCharacterController>().IsControlledLocally = true;
                 fallGuy.GetComponent<FallGuysCharacterController>().IsLocalPlayer = true;
                 CustomisationManager.Instance.ApplyCustomisationsToFallGuy(fallGuy, GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections, -1);
+                fallGuy.AddComponent<MPGNetObject>().netID_ = new MPGNetID(1001);
+                lastplayernetid = 1001;
             }
 
             public void LoadCMS()
@@ -340,6 +343,8 @@ namespace fallguyloadrold
                 fallGuysCharacterController.IsControlledLocally = true;
                 fallGuysCharacterController.IsLocalPlayer = true;
                 CustomisationManager.Instance.ApplyCustomisationsToFallGuy(easterEgg, GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections, -1);
+                lastplayernetid++;
+                easterEgg.GetComponent<MPGNetObject>().netID_ = new MPGNetID(lastplayernetid);
             }
 
             public void Update()
