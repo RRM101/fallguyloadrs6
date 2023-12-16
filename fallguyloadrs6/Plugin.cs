@@ -164,7 +164,8 @@ namespace fallguyloadrold
                     AudioManager.PlayOneShot("MUS_InGame_PreparationPhase");
                     cameraDirector = FindObjectOfType<CameraDirector>();
                     RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
-                    TopBar.SetActive(false);
+                    Destroy(TopBar);
+                    Destroy(MenuBuilder);
                     SpawnFallGuy();
                     cameraDirector.UseIntroCameras(IntroCompleteAction);
                     try
