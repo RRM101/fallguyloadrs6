@@ -309,7 +309,9 @@ namespace fallguyloadrold
                 MenuBuilder = TitleScreen.transform.parent.gameObject.transform.GetChild(0).gameObject;
                 TopBar.SetActive(true);
                 TitleScreen.transform.parent.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-                FindObjectOfType<UICanvas>().transform.GetChild(2).gameObject.SetActive(false);
+                LoadingScreenViewModel loadingScreen = FindObjectOfType<LoadingScreenViewModel>();
+                loadingScreen.Init(FindObjectOfType<UICanvas>(), new ScreenMetaData { Transition = ScreenTransitionType.FadeOut, TransitionTime = 0.25f });
+                loadingScreen.HideScreen();
                 RuntimeManager.LoadBank("BNK_Music_Menu_Season_06");
                 AudioManager.PlayOneShot("MUS_MainMenu_Season_06_LP");
                 LoadCustomizations();
