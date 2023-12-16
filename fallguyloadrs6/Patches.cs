@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using BepInEx;
 using FGClient;
 using UnityEngine;
+using static CatapultAnalytics;
+using FG.Common;
 
 namespace fallguyloadrold
 {
@@ -66,6 +68,13 @@ namespace fallguyloadrold
             {
                 __instance.GameStateView.PrevSimulationTime = 0;
             }
+            return false;
+        }
+
+        [HarmonyPatch(typeof(NavigationEvent), "TrackEvent")]
+        [HarmonyPrefix]
+        static bool TrackEvent(NavigationEvent __instance)
+        {
             return false;
         }
     }
