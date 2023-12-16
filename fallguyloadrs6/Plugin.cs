@@ -23,6 +23,7 @@ using FG.Common.Character.MotorSystem;
 using Levels.Obstacles;
 using FG.Common.LODs;
 using SRF;
+using FGClient.PlayerLevel.UI;
 
 namespace fallguyloadrold
 {
@@ -131,6 +132,7 @@ namespace fallguyloadrold
                 SkinPatternOption[] patternOptions = Resources.FindObjectsOfTypeAll<SkinPatternOption>();
                 ColourOption[] colourOptions = Resources.FindObjectsOfTypeAll<ColourOption>();
                 FaceplateOption[] faceplateOptions = Resources.FindObjectsOfTypeAll<FaceplateOption>();
+                NameplateOption[] nameplateOptions = Resources.FindObjectsOfTypeAll<NameplateOption>();
                 EmotesOption[] emotearray;
                 List<EmotesOption> emotelist = new List<EmotesOption>();
                 HashSet<int> uniqueEmotes = new HashSet<int>();
@@ -154,6 +156,7 @@ namespace fallguyloadrold
                 customisationSelections.PatternOption = patternOptions[UnityEngine.Random.Range(0, patternOptions.Length)];
                 customisationSelections.ColourOption = colourOptions[UnityEngine.Random.Range(0, colourOptions.Length)];
                 customisationSelections.FaceplateOption = faceplateOptions[UnityEngine.Random.Range(0, faceplateOptions.Length)];
+                customisationSelections.NameplateOption = nameplateOptions[UnityEngine.Random.Range(0, nameplateOptions.Length)];
             }
 
             public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -305,6 +308,19 @@ namespace fallguyloadrold
                 CMSLoader cmsLoader = FindObjectOfType<CMSLoader>();
                 servicesManager.HandleConnected();
                 while (cmsLoader.CMSData == null) { yield return null; }
+                var nicknamedict = Resources.FindObjectsOfTypeAll<NicknamesSO>().FirstOrDefault().Nicknames;
+                List<string> nicknameKeys = new List<string>();
+                foreach (var nicknamekey in nicknamedict.Keys)
+                {
+                    nicknameKeys.Add(nicknamekey);
+                    yield return null;
+                }
+                GameObject TopLeftGroup = Resources.FindObjectsOfTypeAll<MainMenuViewModel>().FirstOrDefault().transform.GetChild(0).transform.GetChild(3).gameObject;
+                PlayerLevelViewModel crownRank = TopLeftGroup.transform.GetChild(0).GetComponent<PlayerLevelViewModel>();
+                crownRank.gameObject.GetComponent<ToggleActiveWithFeatureFlag>()._enableIfFeatureDisabled = true;
+                crownRank.gameObject.SetActive(true);
+                NameTagViewModel nameTagViewModel = TopLeftGroup.transform.GetChild(1).GetComponent<NameTagViewModel>();
+
                 TopBar = TitleScreen.transform.parent.gameObject.transform.GetChild(1).gameObject;
                 MenuBuilder = TitleScreen.transform.parent.gameObject.transform.GetChild(0).gameObject;
                 TitleScreen.transform.parent.gameObject.transform.GetChild(2).gameObject.SetActive(false);
@@ -315,6 +331,10 @@ namespace fallguyloadrold
                 LoadCustomizations();
                 FindObjectOfType<MainMenuManager>().ApplyOutfit();
                 yield return new WaitForSeconds(0.25f);
+                nameTagViewModel.PlayerName = Environment.UserName;
+                nameTagViewModel.Nickname = nicknamedict[nicknameKeys[UnityEngine.Random.Range(0, nicknameKeys.Count)]].Name.Text;
+                int crowns = UnityEngine.Random.Range(0, 2000);
+                crownRank.SetPlayerLevel(new PlayerLevelData(crowns));
                 Destroy(loadingScreen.gameObject);
             }
 
