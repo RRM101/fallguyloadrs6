@@ -28,6 +28,9 @@
     <Reference Include="CMS_Runtime">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\CMS_Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="FallGuys.Player.Protocol.Client">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\FallGuys.Player.Protocol.Client.dll</HintPath>
+    </Reference>
     <Reference Include="FMODUnity">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\FMODUnity.dll</HintPath>
     </Reference>
@@ -75,6 +78,9 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+	    <Reference Include="Catapult.Modules.Items.Protocol">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\Catapult.Modules.Items.Protocol.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

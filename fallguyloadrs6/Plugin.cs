@@ -24,6 +24,8 @@ using Levels.Obstacles;
 using FG.Common.LODs;
 using SRF;
 using FGClient.PlayerLevel.UI;
+using Catapult.Modules.Items.Protocol.Dtos;
+using FallGuys.Player.Protocol.Client.Cosmetics;
 
 namespace fallguyloadrold
 {
@@ -378,6 +380,44 @@ namespace fallguyloadrold
                 CustomisationManager.Instance.ApplyCustomisationsToFallGuy(easterEgg, GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections, -1);
                 lastplayernetid++;
                 easterEgg.GetComponent<MPGNetObject>().netID_ = new MPGNetID(lastplayernetid);
+            }
+
+            public static ItemDto CMSDefinitionToItemDto(CMSItemDefinition itemDefinition)
+            {
+                ItemDto itemDto = new ItemDto();
+
+                itemDto.ContentId = itemDefinition.Id;
+                itemDto.Id = itemDefinition.FullItemId;
+                itemDto.ContentType = itemDefinition.GroupId;
+                itemDto.Quantity = 1;
+                return itemDto;
+            }
+
+            public static ColourSchemeDto ItemDtoToColourSchemeDto(ItemDto itemDto) // i cant just use IOwnedCosmeticDto if anyone figures out how to use it please make a pr
+            {
+                ColourSchemeDto cosmeticDto = new ColourSchemeDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static PatternDto ItemDtoToPatternDto(ItemDto itemDto)
+            {
+                PatternDto cosmeticDto = new PatternDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static FaceplateDto ItemDtoToFaceplateDto(ItemDto itemDto)
+            {
+                FaceplateDto cosmeticDto = new FaceplateDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
             }
 
             public void Update()
