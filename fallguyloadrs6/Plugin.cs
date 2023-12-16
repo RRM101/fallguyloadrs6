@@ -327,7 +327,17 @@ namespace fallguyloadrold
                 LoadingScreenViewModel loadingScreen = FindObjectOfType<LoadingScreenViewModel>();
                 loadingScreen.Init(FindObjectOfType<UICanvas>(), new ScreenMetaData { Transition = ScreenTransitionType.FadeOut, TransitionTime = 0.25f });
                 loadingScreen.HideScreen();
-                FindObjectOfType<MainMenuManager>().OnSplashScreenComplete();
+                try
+                {
+                    FindObjectOfType<MainMenuManager>().OnSplashScreenComplete();
+                }
+                catch
+                {
+                    TopBar.SetActive(true);
+                    TopLeftGroup.SetActive(true);
+                    RuntimeManager.LoadBank("BNK_Music_Menu_Season_06");
+                    AudioManager.PlayOneShot("MUS_MainMenu_Season_06_LP");
+                }
                 LoadCustomizations();
                 FindObjectOfType<MainMenuManager>().ApplyOutfit();
                 yield return new WaitForSeconds(0.25f);
