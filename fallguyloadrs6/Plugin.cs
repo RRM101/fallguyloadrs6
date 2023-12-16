@@ -26,6 +26,7 @@ using SRF;
 using FGClient.PlayerLevel.UI;
 using Catapult.Modules.Items.Protocol.Dtos;
 using FallGuys.Player.Protocol.Client.Cosmetics;
+using Levels.Rollout;
 
 namespace fallguyloadrold
 {
@@ -178,6 +179,17 @@ namespace fallguyloadrold
                         EnableVariations();
                     }
                     catch { }
+                    RolloutManager rolloutManager = FindObjectOfType<RolloutManager>();
+
+                    if (rolloutManager != null)
+                    {
+                        int index = 0;
+                        foreach (RolloutManager.RingSegmentSchema ringSegment in rolloutManager._ringSegmentSchemas)
+                        {
+                            rolloutManager.InstantiateRing(index, 1);
+                            index++;
+                        }
+                    }
                 }
             }
 
@@ -262,7 +274,7 @@ namespace fallguyloadrold
                 MPGNetObjectBase[] networkAwareGenericObjects = FindObjectsOfType<MPGNetObjectBase>();
                 List<MPGNetObject> networkAwareMPGNetObjects = new List<MPGNetObject>();
                 COMMON_Pendulum[] pendulums = FindObjectsOfType<COMMON_Pendulum>();
-                    
+
                 foreach (COMMON_Button button in buttons)
                 {
                     button.gameObject.transform.FindChild("ButtonBody").gameObject.AddComponent<Fixes.ButtonFix>();
