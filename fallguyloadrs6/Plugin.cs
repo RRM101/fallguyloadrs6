@@ -316,6 +316,8 @@ namespace fallguyloadrold
             IEnumerator StartPressed(GameObject TitleScreen)
             {
                 RuntimeManager.LoadBank("BNK_Music_GP");
+                PlayerTargetSettings.ShowSelectorEnabled = true;
+                PlayerTargetSettings.PrivateLobbiesV2Enabled = true;
                 CatapultServicesManager servicesManager = FindObjectOfType<CatapultServicesManager>();
                 if (!servicesManager._contentService.DoesContentFileExist())
                 {
