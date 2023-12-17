@@ -13,6 +13,8 @@ using static CatapultAnalytics;
 using FG.Common;
 using FGClient.Customiser;
 using FallGuys.Player.Protocol.Client.Cosmetics;
+using FG.Common.Definition;
+using FG.Common.CMS;
 
 namespace fallguyloadrold
 {
@@ -80,6 +82,14 @@ namespace fallguyloadrold
             return false;
         }
 
+        [HarmonyPatch(typeof(PlayerNameManager), "GetNameToDisplayForPlayer")]
+        [HarmonyPrefix]
+        static bool TrackEvent(PlayerNameManager __instance, ref string __result)
+        {
+            __result = Environment.UserName;
+            return false;
+        }
+
         [HarmonyPatch(typeof(CustomiserColourSection), "GetOwnedList")]
         [HarmonyPrefix]
         static bool ColourGetList(CustomiserColourSection __instance, ref Il2CppSystem.Collections.Generic.List<ColourSchemeDto> __result)
@@ -117,7 +127,6 @@ namespace fallguyloadrold
             return false;
         }
 
-        
         [HarmonyPatch(typeof(CustomiserFaceplateSection), "GetOwnedList")]
         [HarmonyPrefix]
         static bool FaceplateGetList(CustomiserFaceplateSection __instance, ref Il2CppSystem.Collections.Generic.List<FaceplateDto> __result)
@@ -133,6 +142,57 @@ namespace fallguyloadrold
                 }
             }
             __result = faceplates;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(CustomiserNameplateSection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool NameplateGetList(CustomiserNameplateSection __instance, ref Il2CppSystem.Collections.Generic.List<NameplateDto> __result)
+        {
+            NameplateOption[] nameplateOptions = Resources.FindObjectsOfTypeAll<NameplateOption>();
+            Il2CppSystem.Collections.Generic.List<NameplateDto> nameplates = new Il2CppSystem.Collections.Generic.List<NameplateDto>();
+
+            foreach (NameplateOption nameplateOption in nameplateOptions)
+            {
+                if (nameplateOption.CMSData != null)
+                {
+                    nameplates.Add(Plugin.LoaderBehaviour.ItemDtoToNameplateDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(nameplateOption.CMSData)));
+                }
+            }
+            __result = nameplates;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(CustomiserNicknameSection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool NicknameGetList(CustomiserNicknameSection __instance, ref Il2CppSystem.Collections.Generic.List<NicknameDto> __result)
+        {
+            NicknamesSO nicknamesSO = Resources.FindObjectsOfTypeAll<NicknamesSO>().FirstOrDefault();
+            Il2CppSystem.Collections.Generic.List<NicknameDto> nicknames = new Il2CppSystem.Collections.Generic.List<NicknameDto>();
+            foreach (Nickname nickname in nicknamesSO.Nicknames.Values)
+            {
+                nicknames.Add(Plugin.LoaderBehaviour.ItemDtoToNicknameDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(nickname)));
+            }
+
+            __result = nicknames;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(CustomiserEmotesSection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool NameplateGetList(CustomiserEmotesSection __instance, ref Il2CppSystem.Collections.Generic.List<EmoteDto> __result)
+        {
+            EmotesOption[] emotesOptions = Resources.FindObjectsOfTypeAll<EmotesOption>();
+            Il2CppSystem.Collections.Generic.List<EmoteDto> emotes = new Il2CppSystem.Collections.Generic.List<EmoteDto>();
+
+            foreach (EmotesOption emotesOption in emotesOptions)
+            {
+                if (emotesOption.CMSData != null)
+                {
+                    emotes.Add(Plugin.LoaderBehaviour.ItemDtoToEmoteDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(emotesOption.CMSData)));
+                }
+            }
+            __result = emotes;
             return false;
         }
     }

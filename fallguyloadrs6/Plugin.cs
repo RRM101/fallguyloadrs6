@@ -27,6 +27,7 @@ using FGClient.PlayerLevel.UI;
 using Catapult.Modules.Items.Protocol.Dtos;
 using FallGuys.Player.Protocol.Client.Cosmetics;
 using Levels.Rollout;
+using FGClient.Customiser;
 
 namespace fallguyloadrold
 {
@@ -70,6 +71,7 @@ namespace fallguyloadrold
             GameObject fallGuy;
             CameraDirector cameraDirector;
             Round mapSet;
+            CustomisationSelections customisationSelectionsEmoteResetWorkAround;
 
             public void Start()
             {
@@ -355,7 +357,7 @@ namespace fallguyloadrold
                 LoadCustomizations();
                 FindObjectOfType<MainMenuManager>().ApplyOutfit();
                 yield return new WaitForSeconds(0.25f);
-                nameTagViewModel.PlayerName = Environment.UserName;
+                //nameTagViewModel.PlayerName = Environment.UserName;
                 nameTagViewModel.Nickname = nicknamedict[nicknameKeys[UnityEngine.Random.Range(0, nicknameKeys.Count)]].Name.Text;
                 int crowns = UnityEngine.Random.Range(0, 2000);
                 crownRank.SetPlayerLevel(new PlayerLevelData(crowns));
@@ -426,6 +428,33 @@ namespace fallguyloadrold
             public static FaceplateDto ItemDtoToFaceplateDto(ItemDto itemDto)
             {
                 FaceplateDto cosmeticDto = new FaceplateDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static NameplateDto ItemDtoToNameplateDto(ItemDto itemDto)
+            {
+                NameplateDto cosmeticDto = new NameplateDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static NicknameDto ItemDtoToNicknameDto(ItemDto itemDto)
+            {
+                NicknameDto cosmeticDto = new NicknameDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static EmoteDto ItemDtoToEmoteDto(ItemDto itemDto)
+            {
+                EmoteDto cosmeticDto = new EmoteDto();
                 cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
                 cosmeticDto.Item = itemDto;
                 cosmeticDto.IsFavourite = false;
@@ -515,6 +544,21 @@ namespace fallguyloadrold
                     if (popup != null && popup.Message.Contains("Processing content failed!"))
                     {
                         Destroy(popup.transform.parent.gameObject);
+                    }
+
+                    if (FindObjectOfType<TheatricsMenuViewModel>() != null)
+                    {
+                        customisationSelectionsEmoteResetWorkAround = GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections;
+                    }
+                    else
+                    {
+                        if (customisationSelectionsEmoteResetWorkAround != null)
+                        {
+                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteLeftOption = customisationSelectionsEmoteResetWorkAround.EmoteLeftOption;
+                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteRightOption = customisationSelectionsEmoteResetWorkAround.EmoteRightOption;
+                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteTopOption = customisationSelectionsEmoteResetWorkAround.EmoteTopOption;
+                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteBottomOption = customisationSelectionsEmoteResetWorkAround.EmoteBottomOption;
+                        }
                     }
                 }
             }
