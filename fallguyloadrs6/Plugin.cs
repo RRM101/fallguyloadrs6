@@ -34,7 +34,7 @@ namespace fallguyloadrold
     [BepInPlugin("org.rrm1.fallguyloadr.s6", "fallguyloadr", version)]
     public class Plugin : BasePlugin
     {
-        public const string version = "1.1.1";
+        public const string version = "1.2.0";
         public override void Load()
         {
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
