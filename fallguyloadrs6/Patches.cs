@@ -195,5 +195,13 @@ namespace fallguyloadrold
             __result = emotes;
             return false;
         }
+
+        [HarmonyPatch(typeof(ShowsManager), "GetActiveShowsDefs")]
+        [HarmonyPrefix]
+        static bool ShowsManagerGetActiveShowDefs(ShowsManager __instance, ref Il2CppSystem.Collections.Generic.List<ShowDef> __result)
+        {
+            __result = __instance._lastActiveShowDefs;
+            return false;
+        }
     }
 }
