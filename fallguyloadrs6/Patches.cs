@@ -200,9 +200,12 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool ShowsManagerGetActiveShowDefs(ShowsManager __instance, ref Il2CppSystem.Collections.Generic.List<ShowDef> __result)
         {
-            ShowDef showDef = new ShowDef();
-            showDef.ShowFromCMS = Resources.FindObjectsOfTypeAll<ShowsSO>().FirstOrDefault().Shows["event_only_slime_climb_2_1009_1209"];
-            __instance._lastActiveShowDefs.Add(showDef);
+            if (__instance._lastActiveShowDefs.Count < 1)
+            {
+                ShowDef showDef = new ShowDef();
+                showDef.ShowFromCMS = Resources.FindObjectsOfTypeAll<ShowsSO>().FirstOrDefault().Shows["event_only_slime_climb_2_1009_1209"];
+                __instance._lastActiveShowDefs.Add(showDef);
+            }
 
             __result = __instance._lastActiveShowDefs;
             return false;
@@ -214,6 +217,23 @@ namespace fallguyloadrold
         static bool ShowsManagerIsPermanentActiveShow(ShowsManager __instance, ref bool __result)
         {
             __result = true;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(ShowsManager), nameof(ShowsManager.UpdateAndSaveLastSelectedShows))]
+        [HarmonyPrefix]
+        static bool ShowsManagerUpdateAndSaveLastSelectedShows(ShowsManager __instance, bool save)
+        {
+            __instance.SelectedShowDef[__instance._lastActiveShowDefs[0]] = true;
+            save = true;
+            return true;
+        }
+
+        [HarmonyPatch(typeof(ShowSelectorShowElementViewModel), "Awake")]
+        [HarmonyPrefix]
+        static bool ShowSelectorShowElementViewModelAwake(ShowSelectorShowElementViewModel __instance)
+        {
+            __instance._showSelectorVM = GameObject.FindObjectOfType<ShowSelectorViewModel>();
             return false;
         }
     }
