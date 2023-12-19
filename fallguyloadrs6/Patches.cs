@@ -202,9 +202,21 @@ namespace fallguyloadrold
         {
             if (__instance._lastActiveShowDefs.Count < 1)
             {
-                ShowDef showDef = new ShowDef();
-                showDef.ShowFromCMS = Resources.FindObjectsOfTypeAll<ShowsSO>().FirstOrDefault().Shows["event_only_slime_climb_2_1009_1209"];
-                __instance._lastActiveShowDefs.Add(showDef);
+                var Shows = Resources.FindObjectsOfTypeAll<ShowsSO>().FirstOrDefault().Shows;
+                List<string> showIDs = new List<string>();
+                foreach (string id in Shows.Keys)
+                {
+                    showIDs.Add(id);
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    int randomnumber = UnityEngine.Random.Range(0, showIDs.Count);
+                    ShowDef showDef = new ShowDef();
+                    showDef.ShowFromCMS = Shows[showIDs[randomnumber]];
+                    showDef.Index = i;
+                    __instance._lastActiveShowDefs.Add(showDef);
+                }
             }
 
             __result = __instance._lastActiveShowDefs;
@@ -224,16 +236,60 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool ShowsManagerUpdateAndSaveLastSelectedShows(ShowsManager __instance, bool save)
         {
-            __instance.SelectedShowDef[__instance._lastActiveShowDefs[0]] = true;
             save = true;
             return true;
         }
 
-        [HarmonyPatch(typeof(ShowSelectorShowElementViewModel), "Awake")]
+        [HarmonyPatch(typeof(ShowSelectorShowElementViewModel), "SetShowElementData")]
         [HarmonyPrefix]
-        static bool ShowSelectorShowElementViewModelAwake(ShowSelectorShowElementViewModel __instance)
+        static bool ShowSelectorShowElementViewModelSetShowElementData(ShowSelectorShowElementViewModel __instance, ShowSelectorViewModel.ShowSelectorElementData elementData)
         {
-            __instance._showSelectorVM = GameObject.FindObjectOfType<ShowSelectorViewModel>();
+            __instance._showSelectorVM = elementData.showSelectorVM;
+            __instance._showDef = elementData.showDef;
+            __instance._description = elementData.showDef.ShowFromCMS.ShowDescription;
+            return true;
+        }
+
+        [HarmonyPatch(typeof(ShowSelectorShowElementViewModel), "OnClicked")]
+        [HarmonyPrefix]
+        static bool ShowSelectorShowElementViewModelOnClicked(ShowSelectorShowElementViewModel __instance)
+        {
+            __instance.RemovePip();
+            __instance.Chosen = !__instance.Chosen;
+            if (__instance.Chosen)
+            {
+                ShowsManager.Instance.SelectedShowDef[__instance._showDef] = true;
+            }
+            else
+            {
+                ShowsManager.Instance.SelectedShowDef[__instance._showDef] = false;
+            }
+            return false;
+        }
+
+        [HarmonyPatch(typeof(MainMenuViewModel), "OnConnectButtonPressed")]
+        [HarmonyPrefix]
+        static bool MainMenuViewModelOnConnectButtonPressed(MainMenuViewModel __instance)
+        {
+            ShowDef selectedShowDef = null;
+            foreach (var pair in ShowsManager.Instance.SelectedShowDef)
+            {
+                if (pair.Value)
+                {
+                    selectedShowDef = pair.Key;
+                }
+            }
+            Plugin.LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(selectedShowDef);
+            try
+            {
+                __instance.ConnectInitiateTransition(false);
+            }
+            catch { }
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.MainMenuPlay);
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.LobbyFall);
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.Searching);
+
+
             return false;
         }
     }

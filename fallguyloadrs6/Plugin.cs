@@ -58,11 +58,13 @@ namespace fallguyloadrold
             bool loginFailPopupDestroyed = false;
             public static bool isgameplaying = false;
             public static Action IntroCompleteAction;
+            public static LoaderBehaviour loaderBehaviour;
             string musicbank;
             string musicevent;
             bool showui = true;
             bool whatisthis = false;
             uint lastplayernetid;
+            bool modalmessageobjectfound = false;
             GameObject TopBar;
             GameObject MenuBuilder;
             RoundsData roundsData;
@@ -76,6 +78,7 @@ namespace fallguyloadrold
             public void Start()
             {
                 IntroCompleteAction = IntroComplete;
+                loaderBehaviour = this;
                 RuntimeManager.LoadBank("BNK_PlayGo");
                 Debug.Log("fallguyloadr behaviour loaded");
             }
@@ -366,25 +369,13 @@ namespace fallguyloadrold
                 Destroy(loadingScreen.gameObject);
             }
 
-            IEnumerator LoadRandomRound()
+            public void LoadRandomRound()
             {
                 LoadCMS();
                 var lines = File.ReadAllLines(Paths.PluginPath + "/fallguyloadr/CMS/randomrounds.txt");
                 int randomroundnumber = UnityEngine.Random.Range(0, lines.Length - 1);
                 string round_id = lines[randomroundnumber];
-                NetworkGameData.SetGameOptionsFromRoundData(roundsData[round_id]);
-                LoadingGameScreenViewModel loadingScreen = FindObjectOfType<UIManager>().ShowScreen<LoadingGameScreenViewModel>(new ScreenMetaData
-                {
-                    Transition = ScreenTransitionType.FadeInAndOut,
-                    ScreenStack = ScreenStackType.Default
-                });
-                RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
-                var loadingaudioevent = AudioManager.CreateAudioEvent("MUS_InGame_Loading");
-                loadingaudioevent.Value.start();
-                yield return new WaitForSeconds(12);
-                loadingaudioevent.Value.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                LoadCMSScene(false);
-                loadingScreen.HideScreen();
+                StartCoroutine(LoadRoundWithLoadingScreen(roundsData[round_id], 0).WrapToIl2Cpp());
             }
 
             public void EasterEgg()
@@ -463,8 +454,40 @@ namespace fallguyloadrold
                 return cosmeticDto;
             }
 
+            IEnumerator LoadRoundWithLoadingScreen(Round round, int delay)
+            {
+                yield return new WaitForSeconds(delay);
+                NetworkGameData.SetGameOptionsFromRoundData(round);
+                LoadingGameScreenViewModel loadingScreen = FindObjectOfType<UIManager>().ShowScreen<LoadingGameScreenViewModel>(new ScreenMetaData
+                {
+                    Transition = ScreenTransitionType.FadeInAndOut,
+                    ScreenStack = ScreenStackType.Default
+                });
+                RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
+                var loadingaudioevent = AudioManager.CreateAudioEvent("MUS_InGame_Loading");
+                loadingaudioevent.Value.start();
+                yield return new WaitForSeconds(12);
+                loadingaudioevent.Value.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                LoadCMSScene(false);
+                loadingScreen.HideScreen();
+            }
+
+            public void LoadRoundFromShowDef(ShowDef showDef)
+            {
+                RoundPool roundPool = showDef.ShowFromCMS.DefaultEpisode.RoundPool;
+                int randomnumber = UnityEngine.Random.Range(0, roundPool.Stages.Count);
+                Round round = roundPool.Stages[randomnumber].Round;
+                StartCoroutine(LoadRoundWithLoadingScreen(round, 5).WrapToIl2Cpp());
+            }
+
             public void Update()
             {
+                GameObject modalMessageObject = null;
+                if (!modalmessageobjectfound)
+                {
+                    modalMessageObject = FindObjectOfType<UICanvas>().gameObject.transform.GetChild(3).gameObject;
+                }
+
                 if (Input.GetKeyDown(KeyCode.F1))
                 {
                     showui = !showui;
@@ -492,7 +515,7 @@ namespace fallguyloadrold
                     {
                         RuntimeManager.UnloadBank(musicbank);
                     }
-                    StartCoroutine(LoadRandomRound().WrapToIl2Cpp());
+                    LoadRandomRound();
                 }
 
                 if (listcmsvariations)
@@ -535,7 +558,8 @@ namespace fallguyloadrold
                     ModalMessagePopupViewModel popup = FindObjectOfType<ModalMessagePopupViewModel>();
                     if (popup != null && popup.Message == "Failed to login, please check your connection")
                     {
-                        Destroy(popup.transform.parent.gameObject);
+                        //Destroy(popup.transform.parent.gameObject);
+                        PopupManager.Instance.DestroyActivePopup();
                         loginFailPopupDestroyed = true;
                     }
                 }
@@ -545,7 +569,19 @@ namespace fallguyloadrold
                     ModalMessagePopupViewModel popup = FindObjectOfType<ModalMessagePopupViewModel>();
                     if (popup != null && popup.Message.Contains("Processing content failed!"))
                     {
-                        Destroy(popup.transform.parent.gameObject);
+                        PopupManager.Instance.DestroyActivePopup();
+                    }
+
+                    if (modalMessageObject != null)
+                    {
+                        try
+                        {
+                            if (modalMessageObject.transform.GetChild(0).gameObject.name.Contains("Scrim"))
+                            {
+                                Destroy(modalMessageObject.transform.GetChild(0).gameObject);
+                            }
+                        }
+                        catch { }
                     }
 
                     if (FindObjectOfType<TheatricsMenuViewModel>() != null)
