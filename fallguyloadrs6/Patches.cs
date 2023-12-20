@@ -196,6 +196,24 @@ namespace fallguyloadrold
             return false;
         }
 
+        [HarmonyPatch(typeof(CustomiserVictorySection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool VictoryGetList(CustomiserVictorySection __instance, ref Il2CppSystem.Collections.Generic.List<PunchlineDto> __result)
+        {
+            VictoryOption[] victoryOptions = Resources.FindObjectsOfTypeAll<VictoryOption>();
+            Il2CppSystem.Collections.Generic.List<PunchlineDto> punchlines = new Il2CppSystem.Collections.Generic.List<PunchlineDto>();
+
+            foreach (VictoryOption victoryOption in victoryOptions)
+            {
+                if (victoryOption.CMSData != null)
+                {
+                    punchlines.Add(Plugin.LoaderBehaviour.ItemDtoToPunchlineDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(victoryOption.CMSData)));
+                }
+            }
+            __result = punchlines;
+            return false;
+        }
+
         [HarmonyPatch(typeof(ShowsManager), "GetActiveShowsDefs")]
         [HarmonyPrefix]
         static bool ShowsManagerGetActiveShowDefs(ShowsManager __instance, ref Il2CppSystem.Collections.Generic.List<ShowDef> __result)

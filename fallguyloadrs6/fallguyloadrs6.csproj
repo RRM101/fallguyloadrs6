@@ -64,6 +64,9 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>

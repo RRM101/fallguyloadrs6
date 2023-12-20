@@ -28,6 +28,7 @@ using Catapult.Modules.Items.Protocol.Dtos;
 using FallGuys.Player.Protocol.Client.Cosmetics;
 using Levels.Rollout;
 using FGClient.Customiser;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace fallguyloadrold
 {
@@ -140,6 +141,7 @@ namespace fallguyloadrold
                 ColourOption[] colourOptions = Resources.FindObjectsOfTypeAll<ColourOption>();
                 FaceplateOption[] faceplateOptions = Resources.FindObjectsOfTypeAll<FaceplateOption>();
                 NameplateOption[] nameplateOptions = Resources.FindObjectsOfTypeAll<NameplateOption>();
+                VictoryOption[] victoryOptions = Resources.FindObjectsOfTypeAll<VictoryOption>();
                 EmotesOption[] emotearray;
                 List<EmotesOption> emotelist = new List<EmotesOption>();
                 HashSet<int> uniqueEmotes = new HashSet<int>();
@@ -164,6 +166,7 @@ namespace fallguyloadrold
                 customisationSelections.ColourOption = colourOptions[UnityEngine.Random.Range(0, colourOptions.Length)];
                 customisationSelections.FaceplateOption = faceplateOptions[UnityEngine.Random.Range(0, faceplateOptions.Length)];
                 customisationSelections.NameplateOption = nameplateOptions[UnityEngine.Random.Range(0, nameplateOptions.Length)];
+                customisationSelections.VictoryPoseOption = victoryOptions[UnityEngine.Random.Range(0, victoryOptions.Length)];
             }
 
             public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -196,6 +199,35 @@ namespace fallguyloadrold
                         }
                     }
                 }
+                else if (scene.name.Contains("Fallguy_"))
+                {
+                    RuntimeManager.UnloadBank(musicbank);
+                    StartCoroutine(PlayVictoryAnimation().WrapToIl2Cpp());
+                }
+            }
+
+            IEnumerator PlayVictoryAnimation()
+            {
+                VictoryScene victoryScene = FindObjectOfType<VictoryScene>();
+                GameObject fallguy = victoryScene.InstantiateFallguy(victoryScene._fallguySpawnPosition);
+                VictoryOption victoryOption = victoryScene._playerProfile.CustomisationSelections.VictoryPoseOption;
+                GameObject animprop = victoryScene.CreateVictoryAnimationProp(victoryOption);
+                try
+                {
+                    victoryScene.PlayVictoryAnimations(fallguy, victoryOption, animprop);
+                }
+                catch { }
+                var victoryasset = victoryOption.clipAssetRef.LoadAsset<AnimationClip>();
+                yield return victoryasset;
+                if (victoryasset.Status == AsyncOperationStatus.Succeeded)
+                {
+                    AnimationClip animationClip = victoryasset.Result;
+                    string victoryname = animationClip.name;
+
+                    fallguy.GetComponentInChildren<Animator>().Play(victoryname);
+                    victoryScene.PlayMusic();
+                }
+                victoryScene.CustomiseFallguy(fallguy, victoryScene._playerProfile.CustomisationSelections, -1);
             }
 
             public void EnableVariations()
@@ -448,6 +480,15 @@ namespace fallguyloadrold
             public static EmoteDto ItemDtoToEmoteDto(ItemDto itemDto)
             {
                 EmoteDto cosmeticDto = new EmoteDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static PunchlineDto ItemDtoToPunchlineDto(ItemDto itemDto)
+            {
+                PunchlineDto cosmeticDto = new PunchlineDto();
                 cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
                 cosmeticDto.Item = itemDto;
                 cosmeticDto.IsFavourite = false;
