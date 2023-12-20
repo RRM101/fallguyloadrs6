@@ -172,6 +172,7 @@ namespace fallguyloadrold
                 isgameplaying = false;
                 if (scene.name.Contains("FallGuy_"))
                 {
+                    RuntimeManager.LoadBank("BNK_UI_MainMenu");
                     AudioManager.PlayOneShot("MUS_InGame_PreparationPhase");
                     cameraDirector = FindObjectOfType<CameraDirector>();
                     RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
