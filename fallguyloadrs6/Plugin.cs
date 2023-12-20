@@ -73,7 +73,6 @@ namespace fallguyloadrold
             GameObject fallGuy;
             CameraDirector cameraDirector;
             Round mapSet;
-            CustomisationSelections customisationSelectionsEmoteResetWorkAround;
 
             public void Start()
             {
@@ -583,21 +582,6 @@ namespace fallguyloadrold
                             }
                         }
                         catch { }
-                    }
-
-                    if (FindObjectOfType<TheatricsMenuViewModel>() != null)
-                    {
-                        customisationSelectionsEmoteResetWorkAround = GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections;
-                    }
-                    else
-                    {
-                        if (customisationSelectionsEmoteResetWorkAround != null)
-                        {
-                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteLeftOption = customisationSelectionsEmoteResetWorkAround.EmoteLeftOption;
-                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteRightOption = customisationSelectionsEmoteResetWorkAround.EmoteRightOption;
-                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteTopOption = customisationSelectionsEmoteResetWorkAround.EmoteTopOption;
-                            GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections.EmoteBottomOption = customisationSelectionsEmoteResetWorkAround.EmoteBottomOption;
-                        }
                     }
                 }
             }

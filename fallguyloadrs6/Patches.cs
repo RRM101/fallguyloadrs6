@@ -292,5 +292,12 @@ namespace fallguyloadrold
 
             return false;
         }
+
+        [HarmonyPatch(typeof(SubMenuNavigation), "HandleConfigureRequestFailed")]
+        [HarmonyPrefix]
+        static bool SubMenuNavigationHandleConfigureRequestFailed(SubMenuNavigation __instance)
+        {            
+            return false;
+        }
     }
 }
