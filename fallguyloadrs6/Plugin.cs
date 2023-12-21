@@ -226,6 +226,7 @@ namespace fallguyloadrold
 
                     fallguy.GetComponentInChildren<Animator>().Play(victoryname);
                     victoryScene.PlayMusic();
+                    victoryScene._victoryAnimFinishedTimestamp = Time.time + animationClip.length;
                 }
                 victoryScene.CustomiseFallguy(fallguy, victoryScene._playerProfile.CustomisationSelections, -1);
             }
@@ -495,6 +496,24 @@ namespace fallguyloadrold
                 return cosmeticDto;
             }
 
+            public static LowerCostumePieceDto ItemDtoToLowerCostumePieceDto(ItemDto itemDto)
+            {
+                LowerCostumePieceDto cosmeticDto = new LowerCostumePieceDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
+            public static UpperCostumePieceDto ItemDtoToUpperCostumePieceDto(ItemDto itemDto)
+            {
+                UpperCostumePieceDto cosmeticDto = new UpperCostumePieceDto();
+                cosmeticDto.EarnedAt = Il2CppSystem.DateTime.Now;
+                cosmeticDto.Item = itemDto;
+                cosmeticDto.IsFavourite = false;
+                return cosmeticDto;
+            }
+
             IEnumerator LoadRoundWithLoadingScreen(Round round, int delay)
             {
                 yield return new WaitForSeconds(delay);
@@ -519,6 +538,15 @@ namespace fallguyloadrold
                 int randomnumber = UnityEngine.Random.Range(0, roundPool.Stages.Count);
                 Round round = roundPool.Stages[randomnumber].Round;
                 StartCoroutine(LoadRoundWithLoadingScreen(round, 5).WrapToIl2Cpp());
+            }
+            
+            public static Sprite PNGtoSprite(string path, int width, int height)
+            {
+                byte[] imagedata = File.ReadAllBytes(path);
+                Texture2D texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+                ImageConversion.LoadImage(texture, imagedata);
+                Sprite sprite = Sprite.Create(texture, new Rect(0,0,texture.width,texture.height), new Vector2(0,0));
+                return sprite;
             }
 
             public void Update()

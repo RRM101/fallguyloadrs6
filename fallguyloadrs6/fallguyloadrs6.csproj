@@ -73,6 +73,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>

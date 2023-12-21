@@ -214,6 +214,69 @@ namespace fallguyloadrold
             return false;
         }
 
+        [HarmonyPatch(typeof(CustomiserLowerCostumeSection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool LowerGetList(CustomiserLowerCostumeSection __instance, ref Il2CppSystem.Collections.Generic.List<LowerCostumePieceDto> __result)
+        {
+            CostumeOption[] costumeOptions = Resources.FindObjectsOfTypeAll<CostumeOption>();
+            Il2CppSystem.Collections.Generic.List<LowerCostumePieceDto> lowerCostumePieces = new Il2CppSystem.Collections.Generic.List<LowerCostumePieceDto>();
+
+            foreach (CostumeOption costumeOption in costumeOptions)
+            {                
+                if (costumeOption.CMSData != null && costumeOption.CostumeType == CostumeType.Bottom)
+                {
+                    lowerCostumePieces.Add(Plugin.LoaderBehaviour.ItemDtoToLowerCostumePieceDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
+                }
+            }
+            __result = lowerCostumePieces;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(CustomiserUpperCostumeSection), "GetOwnedList")]
+        [HarmonyPrefix]
+        static bool UpperGetList(CustomiserUpperCostumeSection __instance, ref Il2CppSystem.Collections.Generic.List<UpperCostumePieceDto> __result)
+        {
+            CostumeOption[] costumeOptions = Resources.FindObjectsOfTypeAll<CostumeOption>();
+            Il2CppSystem.Collections.Generic.List<UpperCostumePieceDto> upperCostumePieces = new Il2CppSystem.Collections.Generic.List<UpperCostumePieceDto>();
+
+            foreach (CostumeOption costumeOption in costumeOptions)
+            {
+                if (costumeOption.CMSData != null && costumeOption.CostumeType == CostumeType.Top)
+                {
+                    upperCostumePieces.Add(Plugin.LoaderBehaviour.ItemDtoToUpperCostumePieceDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
+                }
+            }
+            __result = upperCostumePieces;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(ItemDefinitionSO), "MenuDisplaySprite", MethodType.Getter)]
+        [HarmonyPrefix]
+        static bool ItemDefinitionSOMenuDisplaySprite(ItemDefinitionSO __instance, ref Sprite __result)
+        {            
+            if (__instance.ItemType == ItemType.Costume && (__instance.menuDisplaySpriteReference.SubObjectName.Contains("_Top_") | __instance.menuDisplaySpriteReference.SubObjectName.Contains("_Bottom_")))
+            {
+                string costumetype = "";
+
+                if (__instance.menuDisplaySpriteReference.SubObjectName.Contains("_Top_"))
+                {
+                    costumetype = "Upper";
+                }
+                else
+                {
+                    costumetype = "Lower";
+                }
+
+                string path = Paths.PluginPath + $"/fallguyloadr/Assets/{costumetype}Costumes/{__instance.menuDisplaySpriteReference.SubObjectName}.png";
+                __result = Plugin.LoaderBehaviour.PNGtoSprite(path, 118, 134);
+            }
+            else
+            {
+                __result = __instance.AtlasLoadableAsset.GetSprite(__instance.menuDisplaySpriteReference.SubObjectName);
+            }
+            return false;
+        }
+
         [HarmonyPatch(typeof(ShowsManager), "GetActiveShowsDefs")]
         [HarmonyPrefix]
         static bool ShowsManagerGetActiveShowDefs(ShowsManager __instance, ref Il2CppSystem.Collections.Generic.List<ShowDef> __result)
