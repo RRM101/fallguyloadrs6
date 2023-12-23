@@ -1,4 +1,5 @@
 ﻿using FG.Common;
+using FG.Common.LevelEvents;
 using HarmonyLib;
 using Levels.Obstacles;
 using Levels.WallGuys;
@@ -102,6 +103,35 @@ namespace fallguyloadrold
             __instance._swingVelocity = __instance.CalcRandomScaledSwingVelocity(__instance._localToWorldRotationProjection * new Vector3(__instance._velocityThreshold, 0f, 0f));
             __instance._canPush = true;
             __instance._delay = 0f;
+
+            return false;
+        }
+
+        [HarmonyPatch(typeof(OnTriggerLevelEventEmitter), "Start")]
+        [HarmonyPrefix]
+        static bool OnTriggerLevelEventEmitterStart(OnTriggerLevelEventEmitter __instance)
+        {
+            __instance._levelEventManager = LevelEventManager.Instance;
+            __instance._definitionIndex = 0;
+            __instance._initialised = true;
+
+            return false;
+        }
+
+        [HarmonyPatch(typeof(OnTriggerLevelEventEmitter), "OnTriggerEnter")]
+        [HarmonyPrefix]
+        static bool OnTriggerLevelEventEmitterOnTriggerEnter(OnTriggerLevelEventEmitter __instance, Collider collider)
+        {
+            if (!__instance.IgnoreTrigger(collider))
+            {
+                __instance._onTrigger?.Invoke(collider);
+                try { __instance.SendLevelEvent(); }
+                catch { }
+                if (!collider.gameObject.name.Contains("MaxSegmentWidth"))
+                {
+                    GameObject.Destroy(__instance.gameObject);
+                }
+            }
 
             return false;
         }
