@@ -40,6 +40,7 @@ namespace fallguyloadrold
         {
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<Fixes.ButtonFix>();
+            ClassInjector.RegisterTypeInIl2Cpp<FallGuyBehaviour>();
             GameObject obj = new GameObject("Loader Behaviour");
             GameObject.DontDestroyOnLoad(obj);
             obj.hideFlags = HideFlags.HideAndDontSave;
@@ -266,6 +267,7 @@ namespace fallguyloadrold
                 fallGuy.GetComponent<FallGuysCharacterController>().IsLocalPlayer = true;
                 CustomisationManager.Instance.ApplyCustomisationsToFallGuy(fallGuy, GlobalGameStateClient.Instance.PlayerProfile.CustomisationSelections, -1);
                 fallGuy.AddComponent<MPGNetObject>().netID_ = new MPGNetID(1001);
+                fallGuy.AddComponent<FallGuyBehaviour>();
                 lastplayernetid = 1001;
             }
 

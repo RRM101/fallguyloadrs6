@@ -335,6 +335,7 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool ShowSelectorShowElementViewModelOnClicked(ShowSelectorShowElementViewModel __instance)
         {
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.GenericAccept);
             __instance.RemovePip();
             __instance.Chosen = !__instance.Chosen;
             if (__instance.Chosen)
