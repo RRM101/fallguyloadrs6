@@ -21,15 +21,9 @@ namespace fallguyloadrold
     public class Patches
     {
         [HarmonyPatch(typeof(ClientGameStateView), "IsGamePlaying", MethodType.Getter)]
-        [HarmonyPrefix]
-        static bool isgameplaying(ClientGameStateView __instance, ref bool __result)
-        {
-            __result = LoaderBehaviour.isgameplaying;
-            return false;
-        }
         [HarmonyPatch(typeof(ClientGameStateView), "IsGameAlive", MethodType.Getter)]
         [HarmonyPrefix]
-        static bool isgamealive(ClientGameStateView __instance, ref bool __result)
+        static bool isgameplaying(ClientGameStateView __instance, ref bool __result)
         {
             __result = LoaderBehaviour.isgameplaying;
             return false;

@@ -1,4 +1,5 @@
 ﻿using FG.Common;
+using FGClient.UI;
 using Levels.Progression;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,37 @@ namespace fallguyloadrold
         CheckpointManager checkpointManager;
         Rigidbody rigidbody;
         MPGNetObject mpgNetObject;
+        bool isXtreme = false;
+        bool xtremePopupOpened = false;
 
         public void Start()
         {
             checkpointManager = FindObjectOfType<CheckpointManager>();
             rigidbody = GetComponent<Rigidbody>();
             mpgNetObject = GetComponent<MPGNetObject>();
+            if (GameObject.Find("SlimeSurvival").transform.FindChild("Slime").gameObject.active) { isXtreme = true; }
+        }
+
+        public void CloseGame(bool Clicked)
+        {
+            if (Clicked)
+            {
+                Application.Quit();
+            }
+        }
+
+        public void ShowXtremePopup()
+        {
+            Il2CppSystem.Action<bool> quitAction = new System.Action<bool>(CloseGame);
+
+            ModalMessageData modalMessageData = new ModalMessageData
+            {
+                Title = "xtreme_title_insult",
+                Message = "xtreme_message_insult",
+                ModalType = UIModalMessage.ModalType.MT_OK,
+                OnCloseButtonPressed = quitAction
+            };
+            PopupManager.Instance.Show(modalMessageData);
         }
 
         public void Update()
@@ -28,24 +54,35 @@ namespace fallguyloadrold
             {
                 foreach (var checkpoint in checkpointManager._checkpointZones)
                 {
-                    try
+                    if (!isXtreme)
                     {
-                        if (checkpoint.UniqueId == checkpointManager._netIDToCheckpointMap[mpgNetObject.netID()])
+                        try
                         {
-                            checkpoint.GetNextSpawnPositionAndRotation(out var position, out var rotation);
+                            if (checkpoint.UniqueId == checkpointManager._netIDToCheckpointMap[mpgNetObject.netID()])
+                            {
+                                checkpoint.GetNextSpawnPositionAndRotation(out var position, out var rotation);
 
-                            transform.position = position;
-                            transform.rotation = rotation;
+                                transform.position = position;
+                                transform.rotation = rotation;
+                                rigidbody.velocity = new Vector3(0, 0, 0);
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                            MultiplayerStartingPosition multiplayerStartingPosition = FindObjectOfType<MultiplayerStartingPosition>();
+                            transform.position = multiplayerStartingPosition.transform.position;
+                            transform.rotation = multiplayerStartingPosition.transform.rotation;
                             rigidbody.velocity = new Vector3(0, 0, 0);
-                            break;
                         }
                     }
-                    catch
+                    else
                     {
-                        MultiplayerStartingPosition multiplayerStartingPosition = FindObjectOfType<MultiplayerStartingPosition>();
-                        transform.position = multiplayerStartingPosition.transform.position;
-                        transform.rotation = multiplayerStartingPosition.transform.rotation;
-                        rigidbody.velocity = new Vector3(0, 0, 0);
+                        if (!xtremePopupOpened)
+                        {
+                            ShowXtremePopup();
+                            xtremePopupOpened = true;
+                        }
                     }
                 }
             }

@@ -109,6 +109,25 @@ namespace fallguyloadrold
             }
         }
 
+        public void AddCMSStringKeys()  // From CEP
+        {
+            Dictionary<string, string> stringsToAdd = new Dictionary<string, string>()
+            {
+                {"xtreme_title_insult", "You suck"},
+                {"xtreme_message_insult", "Seriously, why did you pick XTREME mode?"},
+            };
+
+            foreach (var toAdd in stringsToAdd) AddNewStringToCMS(toAdd.Key, toAdd.Value);
+        }
+
+        public void AddNewStringToCMS(string key, string value)
+        {
+            if (!CMSLoader.Instance._localisedStrings._localisedStrings.ContainsKey(key))
+            {
+                CMSLoader.Instance._localisedStrings._localisedStrings.Add(key, value);
+            }
+        }
+
         public void LoadCMSScene(bool Additive)
         {
             LoadCMS();
@@ -362,9 +381,9 @@ namespace fallguyloadrold
             {
                 File.Copy(Paths.PluginPath + "/fallguyloadr/CMS/content_v1", Application.persistentDataPath + "/content_v1", true);
             }
-            CMSLoader cmsLoader = FindObjectOfType<CMSLoader>();
             servicesManager.HandleConnected();
-            while (cmsLoader.CMSData == null) { yield return null; }
+            while (CMSLoader.Instance.CMSData == null) { yield return null; }
+            AddCMSStringKeys();
             var nicknamedict = Resources.FindObjectsOfTypeAll<NicknamesSO>().FirstOrDefault().Nicknames;
             List<string> nicknameKeys = new List<string>();
             foreach (var nicknamekey in nicknamedict.Keys)
