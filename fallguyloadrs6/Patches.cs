@@ -24,14 +24,14 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool isgameplaying(ClientGameStateView __instance, ref bool __result)
         {
-            __result = Plugin.LoaderBehaviour.isgameplaying;
+            __result = LoaderBehaviour.isgameplaying;
             return false;
         }
         [HarmonyPatch(typeof(ClientGameStateView), "IsGameAlive", MethodType.Getter)]
         [HarmonyPrefix]
         static bool isgamealive(ClientGameStateView __instance, ref bool __result)
         {
-            __result = Plugin.LoaderBehaviour.isgameplaying;
+            __result = LoaderBehaviour.isgameplaying;
             return false;
         }
 
@@ -101,7 +101,7 @@ namespace fallguyloadrold
             {
                 if (colourOption.CMSData != null)
                 {
-                    colourSchemes.Add(Plugin.LoaderBehaviour.ItemDtoToColourSchemeDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(colourOption.CMSData)));
+                    colourSchemes.Add(LoaderBehaviour.ItemDtoToColourSchemeDto(LoaderBehaviour.CMSDefinitionToItemDto(colourOption.CMSData)));
                 }
             }
             __result = colourSchemes;
@@ -120,7 +120,7 @@ namespace fallguyloadrold
             {
                 if (patternOption.CMSData != null)
                 {
-                    patterns.Add(Plugin.LoaderBehaviour.ItemDtoToPatternDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(patternOption.CMSData)));
+                    patterns.Add(LoaderBehaviour.ItemDtoToPatternDto(LoaderBehaviour.CMSDefinitionToItemDto(patternOption.CMSData)));
                 }
             }
             __result = patterns;
@@ -138,7 +138,7 @@ namespace fallguyloadrold
             {
                 if (faceplateOption.CMSData != null)
                 {
-                    faceplates.Add(Plugin.LoaderBehaviour.ItemDtoToFaceplateDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(faceplateOption.CMSData)));
+                    faceplates.Add(LoaderBehaviour.ItemDtoToFaceplateDto(LoaderBehaviour.CMSDefinitionToItemDto(faceplateOption.CMSData)));
                 }
             }
             __result = faceplates;
@@ -156,7 +156,7 @@ namespace fallguyloadrold
             {
                 if (nameplateOption.CMSData != null)
                 {
-                    nameplates.Add(Plugin.LoaderBehaviour.ItemDtoToNameplateDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(nameplateOption.CMSData)));
+                    nameplates.Add(LoaderBehaviour.ItemDtoToNameplateDto(LoaderBehaviour.CMSDefinitionToItemDto(nameplateOption.CMSData)));
                 }
             }
             __result = nameplates;
@@ -171,7 +171,7 @@ namespace fallguyloadrold
             Il2CppSystem.Collections.Generic.List<NicknameDto> nicknames = new Il2CppSystem.Collections.Generic.List<NicknameDto>();
             foreach (Nickname nickname in nicknamesSO.Nicknames.Values)
             {
-                nicknames.Add(Plugin.LoaderBehaviour.ItemDtoToNicknameDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(nickname)));
+                nicknames.Add(LoaderBehaviour.ItemDtoToNicknameDto(LoaderBehaviour.CMSDefinitionToItemDto(nickname)));
             }
 
             __result = nicknames;
@@ -189,7 +189,7 @@ namespace fallguyloadrold
             {
                 if (emotesOption.CMSData != null)
                 {
-                    emotes.Add(Plugin.LoaderBehaviour.ItemDtoToEmoteDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(emotesOption.CMSData)));
+                    emotes.Add(LoaderBehaviour.ItemDtoToEmoteDto(LoaderBehaviour.CMSDefinitionToItemDto(emotesOption.CMSData)));
                 }
             }
             __result = emotes;
@@ -207,7 +207,7 @@ namespace fallguyloadrold
             {
                 if (victoryOption.CMSData != null)
                 {
-                    punchlines.Add(Plugin.LoaderBehaviour.ItemDtoToPunchlineDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(victoryOption.CMSData)));
+                    punchlines.Add(LoaderBehaviour.ItemDtoToPunchlineDto(LoaderBehaviour.CMSDefinitionToItemDto(victoryOption.CMSData)));
                 }
             }
             __result = punchlines;
@@ -225,7 +225,7 @@ namespace fallguyloadrold
             {                
                 if (costumeOption.CMSData != null && costumeOption.CostumeType == CostumeType.Bottom)
                 {
-                    lowerCostumePieces.Add(Plugin.LoaderBehaviour.ItemDtoToLowerCostumePieceDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
+                    lowerCostumePieces.Add(LoaderBehaviour.ItemDtoToLowerCostumePieceDto(LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
                 }
             }
             __result = lowerCostumePieces;
@@ -243,7 +243,7 @@ namespace fallguyloadrold
             {
                 if (costumeOption.CMSData != null && costumeOption.CostumeType == CostumeType.Top)
                 {
-                    upperCostumePieces.Add(Plugin.LoaderBehaviour.ItemDtoToUpperCostumePieceDto(Plugin.LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
+                    upperCostumePieces.Add(LoaderBehaviour.ItemDtoToUpperCostumePieceDto(LoaderBehaviour.CMSDefinitionToItemDto(costumeOption.CMSData)));
                 }
             }
             __result = upperCostumePieces;
@@ -268,7 +268,7 @@ namespace fallguyloadrold
                 }
 
                 string path = Paths.PluginPath + $"/fallguyloadr/Assets/{costumetype}Costumes/{__instance.menuDisplaySpriteReference.SubObjectName}.png";
-                __result = Plugin.LoaderBehaviour.PNGtoSprite(path, 118, 134);
+                __result = LoaderBehaviour.PNGtoSprite(path, 118, 134);
             }
             else
             {
@@ -361,7 +361,7 @@ namespace fallguyloadrold
                     selectedShowDef = pair.Key;
                 }
             }
-            Plugin.LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(selectedShowDef);
+            LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(selectedShowDef);
             try
             {
                 __instance.ConnectInitiateTransition(false);
