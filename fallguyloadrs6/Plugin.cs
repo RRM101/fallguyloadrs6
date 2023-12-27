@@ -113,7 +113,7 @@ namespace fallguyloadrold
         {
             Dictionary<string, string> stringsToAdd = new Dictionary<string, string>()
             {
-                {"xtreme_title_insult", "You suck"},
+                {"xtreme_title", "QUIT GAME"},
                 {"xtreme_message_insult", "Seriously, why did you pick XTREME mode?"},
             };
 

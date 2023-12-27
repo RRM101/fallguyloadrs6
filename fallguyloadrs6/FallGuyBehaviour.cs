@@ -40,7 +40,7 @@ namespace fallguyloadrold
 
             ModalMessageData modalMessageData = new ModalMessageData
             {
-                Title = "xtreme_title_insult",
+                Title = "xtreme_title",
                 Message = "xtreme_message_insult",
                 ModalType = UIModalMessage.ModalType.MT_OK,
                 OnCloseButtonPressed = quitAction
