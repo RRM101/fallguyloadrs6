@@ -50,7 +50,7 @@ namespace fallguyloadrold
 
         public void Update()
         {
-            if (checkpointManager != null && transform.position.y < -50)
+            if (checkpointManager != null && transform.position.y < -50 || Input.GetKeyDown(KeyCode.R))
             {
                 foreach (var checkpoint in checkpointManager._checkpointZones)
                 {
