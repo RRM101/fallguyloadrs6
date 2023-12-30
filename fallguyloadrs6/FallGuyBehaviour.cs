@@ -50,40 +50,50 @@ namespace fallguyloadrold
 
         public void Update()
         {
-            if (checkpointManager != null && transform.position.y < -50 || Input.GetKeyDown(KeyCode.R))
+            if (transform.position.y < -50 || Input.GetKeyDown(KeyCode.R))
             {
-                foreach (var checkpoint in checkpointManager._checkpointZones)
+                if (checkpointManager != null)
                 {
-                    if (!isXtreme)
+                    foreach (var checkpoint in checkpointManager._checkpointZones)
                     {
-                        try
+                        if (!isXtreme)
                         {
-                            if (checkpoint.UniqueId == checkpointManager._netIDToCheckpointMap[mpgNetObject.netID()])
+                            try
                             {
-                                checkpoint.GetNextSpawnPositionAndRotation(out var position, out var rotation);
+                                if (checkpoint.UniqueId == checkpointManager._netIDToCheckpointMap[mpgNetObject.netID()])
+                                {
+                                    checkpoint.GetNextSpawnPositionAndRotation(out var position, out var rotation);
 
-                                transform.position = position;
-                                transform.rotation = rotation;
+                                    transform.position = position;
+                                    transform.rotation = rotation;
+                                    rigidbody.velocity = new Vector3(0, 0, 0);
+                                    break;
+                                }
+                            }
+                            catch
+                            {
+                                MultiplayerStartingPosition multiplayerStartingPosition = FindObjectOfType<MultiplayerStartingPosition>();
+                                transform.position = multiplayerStartingPosition.transform.position;
+                                transform.rotation = multiplayerStartingPosition.transform.rotation;
                                 rigidbody.velocity = new Vector3(0, 0, 0);
-                                break;
                             }
                         }
-                        catch
+                        else
                         {
-                            MultiplayerStartingPosition multiplayerStartingPosition = FindObjectOfType<MultiplayerStartingPosition>();
-                            transform.position = multiplayerStartingPosition.transform.position;
-                            transform.rotation = multiplayerStartingPosition.transform.rotation;
-                            rigidbody.velocity = new Vector3(0, 0, 0);
+                            if (!xtremePopupOpened)
+                            {
+                                ShowXtremePopup();
+                                xtremePopupOpened = true;
+                            }
                         }
                     }
-                    else
-                    {
-                        if (!xtremePopupOpened)
-                        {
-                            ShowXtremePopup();
-                            xtremePopupOpened = true;
-                        }
-                    }
+                }
+                else
+                {
+                    MultiplayerStartingPosition multiplayerStartingPosition = FindObjectOfType<MultiplayerStartingPosition>();
+                    transform.position = multiplayerStartingPosition.transform.position;
+                    transform.rotation = multiplayerStartingPosition.transform.rotation;
+                    rigidbody.velocity = new Vector3(0, 0, 0);
                 }
             }
         }

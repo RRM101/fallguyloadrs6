@@ -54,9 +54,15 @@ namespace fallguyloadrold
     public class LoaderBehaviour : MonoBehaviour
     {
         string text = "round_";
+        string imagefile = "Filename Here";
+        string imagewidth = "width";
+        string imageheight = "height";
+        bool loadimage;
+        bool closeimageloader;
         bool single;
         bool random;
-        bool listcmsvariations;
+        bool imageloader;
+        bool imageloaderui = false;
         bool startPressed = false;
         bool loginFailPopupDestroyed = false;
         public static bool isgameplaying = false;
@@ -76,6 +82,7 @@ namespace fallguyloadrold
         GameObject fallGuy;
         CameraDirector cameraDirector;
         Round mapSet;
+        ShowDef currentShowDef;
 
         public void Start()
         {
@@ -95,17 +102,32 @@ namespace fallguyloadrold
             // Loader UI
             if (showui)
             {
-                GUI.Box(new Rect(10f, 10f, 120f, 155f), "");
-                GUI.Label(new Rect(30f, 15f, 100f, 30f), "fallguy loadr");
-                text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
-                single = GUI.Button(new Rect(20f, 40f, 100f, 25f), "load single");
-                random = GUI.Button(new Rect(20f, 70f, 100f, 25f), "load random");
-                listcmsvariations = GUI.Button(new Rect(20f, 130f, 100f, 25f), "CMS Rounds");
-                GUI.Label(new Rect(50f, 165f, 100f, 30f), "v" + Plugin.version);
-                if (whatisthis)
+                if (!imageloaderui)
                 {
-                    GUI.Label(new Rect(47f, 185f, 100f, 30f), "Press H");
+                    GUI.Box(new Rect(10f, 10f, 120f, 155f), "");
+                    GUI.Label(new Rect(30f, 15f, 100f, 30f), "fallguy loadr");
+                    text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
+                    single = GUI.Button(new Rect(20f, 40f, 100f, 25f), "select round");
+                    random = GUI.Button(new Rect(20f, 70f, 100f, 25f), "load random");
+                    imageloader = GUI.Button(new Rect(20f, 130f, 100f, 25f), "Image Loader");
+                    if (whatisthis)
+                    {
+                        GUI.Label(new Rect(47f, 185f, 100f, 30f), "Press H");
+                        text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
+
+                    }
                 }
+                else
+                {
+                    GUI.Box(new Rect(10f, 10f, 120f, 155f), "");
+                    GUI.Label(new Rect(30f, 15f, 100f, 30f), "Image Loader");
+                    imagefile = GUI.TextField(new Rect(20f, 40f, 100f, 25f), imagefile);
+                    imagewidth = GUI.TextField(new Rect(20f, 70f, 47.5f, 25f), imagewidth);
+                    imageheight = GUI.TextField(new Rect(73f, 70f, 47.5f, 25f), imageheight);
+                    loadimage = GUI.Button(new Rect(20f, 100f, 100f, 25f), "Load"); 
+                    closeimageloader = GUI.Button(new Rect(20f, 130f, 100f, 25f), "Back");
+                }
+                GUI.Label(new Rect(50f, 165f, 100f, 30f), "v" + Plugin.version);
             }
         }
 
@@ -115,6 +137,11 @@ namespace fallguyloadrold
             {
                 {"xtreme_title", "QUIT GAME"},
                 {"xtreme_message_insult", "Seriously, why did you pick XTREME mode?"},
+                {"imageloader_error", "ERROR"},
+                {"imageloader_number_error_message", "Please enter a number for the height and width."},
+                {"imageloader_file_not_found_error_message", "File not found."},
+                {"imageloader_success", "SUCCESS"},
+                {"imageloader_success_message", "Successfully loaded image"}
             };
 
             foreach (var toAdd in stringsToAdd) AddNewStringToCMS(toAdd.Key, toAdd.Value);
@@ -556,6 +583,7 @@ namespace fallguyloadrold
 
         public void LoadRoundFromShowDef(ShowDef showDef)
         {
+            currentShowDef = showDef;
             RoundPool roundPool = showDef.ShowFromCMS.DefaultEpisode.RoundPool;
             int randomnumber = UnityEngine.Random.Range(0, roundPool.Stages.Count);
             Round round = roundPool.Stages[randomnumber].Round;
@@ -569,6 +597,51 @@ namespace fallguyloadrold
             ImageConversion.LoadImage(texture, imagedata);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
             return sprite;
+        }
+
+        public void LoadImage()
+        {
+            string path = $"{Paths.PluginPath}/fallguyloadr/Assets/UserImages/{imagefile}";
+
+            if (!File.Exists(path))
+            {
+                ModalMessageData modalMessageData = new ModalMessageData
+                {
+                    Title = "imageloader_error",
+                    Message = "imageloader_file_not_found_error_message",
+                    ModalType = UIModalMessage.ModalType.MT_OK
+                };
+                PopupManager.Instance.Show(modalMessageData);
+                return;
+            }
+            
+            GameObject imageGameObject = new GameObject(imagefile);
+            imageGameObject.transform.position = fallGuy.transform.position;
+            bool heightsuccess = int.TryParse(imageheight,out int height);
+            bool widthsuccess = int.TryParse(imagewidth,out int width);
+
+            if (heightsuccess && widthsuccess)
+            {
+                imageGameObject.AddComponent<SpriteRenderer>().sprite = PNGtoSprite(path, width, height);
+                ModalMessageData modalMessageData = new ModalMessageData
+                {
+                    Title = "imageloader_success",
+                    Message = "imageloader_success_message",
+                    ModalType = UIModalMessage.ModalType.MT_OK
+                };
+                PopupManager.Instance.Show(modalMessageData);
+            }
+            else
+            {
+                ModalMessageData modalMessageData = new ModalMessageData
+                {
+                    Title = "imageloader_error",
+                    Message = "imageloader_number_error_message",
+                    ModalType = UIModalMessage.ModalType.MT_OK
+                };
+                PopupManager.Instance.Show(modalMessageData);
+                Destroy(imageGameObject);
+            }
         }
 
         public void Update()
@@ -609,9 +682,20 @@ namespace fallguyloadrold
                 LoadRandomRound();
             }
 
-            if (listcmsvariations)
+            if (imageloader)
             {
-                ListCMSVariations();
+                imageloaderui = true;
+            }
+
+            if (closeimageloader)
+            {
+                imageloaderui = false;
+                closeimageloader = false;
+            }
+
+            if (loadimage)
+            {
+                LoadImage();
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
@@ -662,19 +746,20 @@ namespace fallguyloadrold
                 {
                     PopupManager.Instance.DestroyActivePopup();
                 }
-
-                if (modalMessageObject != null)
-                {
-                    try
-                    {
-                        if (modalMessageObject.transform.GetChild(0).gameObject.name.Contains("Scrim"))
-                        {
-                            Destroy(modalMessageObject.transform.GetChild(0).gameObject);
-                        }
-                    }
-                    catch { }
-                }
             }
+
+            if (modalMessageObject != null)
+            {
+                try
+                {
+                    if (modalMessageObject.transform.GetChild(0).gameObject.name.Contains("Scrim"))
+                    {
+                        Destroy(modalMessageObject.transform.GetChild(0).gameObject);
+                    }
+                }
+                catch { }
+            }
+            
         }
     }
 }
