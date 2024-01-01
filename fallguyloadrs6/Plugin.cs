@@ -225,6 +225,7 @@ namespace fallguyloadrold
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             isgameplaying = false;
+            RuntimeManager.UnloadBank("BNK_SFX_WinnerScreen");
             if (scene.name.Contains("FallGuy_"))
             {
                 RuntimeManager.LoadBank("BNK_UI_MainMenu");
@@ -265,22 +266,30 @@ namespace fallguyloadrold
             GameObject fallguy = victoryScene.InstantiateFallguy(victoryScene._fallguySpawnPosition);
             VictoryOption victoryOption = victoryScene._playerProfile.CustomisationSelections.VictoryPoseOption;
             GameObject animprop = victoryScene.CreateVictoryAnimationProp(victoryOption);
+            AnimationClip animationClip = null;
             try
             {
                 victoryScene.PlayVictoryAnimations(fallguy, victoryOption, animprop);
             }
             catch { }
-            var victoryasset = victoryOption.clipAssetRef.LoadAsset<AnimationClip>();
-            yield return victoryasset;
-            if (victoryasset.Status == AsyncOperationStatus.Succeeded)
+            if (victoryOption.clipAssetRef.Asset == null)
             {
-                AnimationClip animationClip = victoryasset.Result;
-                string victoryname = animationClip.name;
-
-                fallguy.GetComponentInChildren<Animator>().Play(victoryname);
-                victoryScene.PlayMusic();
-                victoryScene._victoryAnimFinishedTimestamp = Time.time + animationClip.length;
+                var victoryasset = victoryOption.clipAssetRef.LoadAsset<AnimationClip>();
+                yield return victoryasset;
+                if (victoryasset.Status == AsyncOperationStatus.Succeeded)
+                {
+                    animationClip = victoryasset.Result;
+                }
             }
+            else
+            {
+                animationClip = victoryOption.clipAssetRef.Asset.Cast<AnimationClip>();
+            }
+            yield return null;
+            string victoryname = animationClip.name;
+
+            fallguy.GetComponentInChildren<Animator>().Play(victoryname);
+            victoryScene.PlayMusic();
             victoryScene.CustomiseFallguy(fallguy, victoryScene._playerProfile.CustomisationSelections, -1);
         }
 
@@ -464,6 +473,7 @@ namespace fallguyloadrold
         public void LoadRandomRound()
         {
             LoadCMS();
+            RuntimeManager.UnloadBank("BNK_SFX_WinnerScreen");
             var lines = File.ReadAllLines(Paths.PluginPath + "/fallguyloadr/CMS/randomrounds.txt");
             int randomroundnumber = UnityEngine.Random.Range(0, lines.Length - 1);
             string round_id = lines[randomroundnumber];
@@ -575,6 +585,7 @@ namespace fallguyloadrold
 
         IEnumerator LoadRoundWithLoadingScreen(Round round, int delay)
         {
+            isgameplaying = false;
             yield return new WaitForSeconds(delay);
             NetworkGameData.SetGameOptionsFromRoundData(round);
             LoadingGameScreenViewModel loadingScreen = FindObjectOfType<UIManager>().ShowScreen<LoadingGameScreenViewModel>(new ScreenMetaData
