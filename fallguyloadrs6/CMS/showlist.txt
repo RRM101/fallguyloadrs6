@@ -1,0 +1,287 @@
+debug_lobbies_show_solo: Debug Lobbies Show solo
+debug_lobbies_show: Debug Lobbies Show
+debug_shard_show: debug shard show
+event_animals_0908_to_1108_2021: Beasty Guys
+event_animals_template: Beasty Guys
+event_anniversary_season_1_0408_to_0808_2021: Anniversary Party
+event_anniversary_season_1: Anniversary Party
+event_autumn_festival_squads_1611_to_2111_2021: Squad Celebration
+event_autumn_festival_squads_2109_2709_21: Squad Celebration
+event_autumn_festival_squads_2412_to_2712_2021: Squad Celebration
+event_autumn_festival_squads_template: Squad Celebration
+event_end_of_season_s1: Finale 1/5: The Thursday Show
+event_end_of_season_s2: Finale 2/5: The Friday Show
+event_end_of_season_s3: Finale 3/5: The Saturday Show
+event_end_of_season_s4: Finale 4/5: The Sunday Show
+event_end_of_season_s5: Finale 5/5: The Monday Show
+event_fan_favourites_0110_to_0510_2021: Fan Favourites
+event_fan_favourites_0203_to_0503_2021: Fan Favourites
+event_fan_favourites_1804_to_2004_2021: Fan Favourites
+event_fan_favourites_2910_to_0111_2021: Fan Favourites
+event_fan_favourites_template: Fan Favourites
+event_fanfare_2008_to_2208_2021: Blow Up
+event_fanfare_2305_to_2605_2021: Blow Up
+event_fanfare_2806_to_0107_2021: Blow Up
+event_fanfare_template: Blow Up
+event_fruit_basket_0801_to_1401: Fruit Basket
+event_fruit_basket_2106_to_2306_2021: Fruit Basket
+event_fruit_basket_3101_to_0302_2022: Fruit Basket
+event_fruit_basket: Fruit Basket
+event_kudos_blow_up_0910_to_1110_2021: Time Is Kudos!: Blow Up
+event_kudos_blow_up_template: Time Is Kudos!: Blow Up
+event_kudos_bollard_greens_1310_to_1510_2021: Time Is Kudos!: Bollard Greens
+event_kudos_bollard_greens_1510_to_1710_2021: Time Is Kudos!: Bollard Greens
+event_kudos_bollard_greens_template: Time Is Kudos!: Bollard Greens
+event_kudos_gravity_wield_1110_to_1310_2021: Time Is Kudos!: Gravity Wield
+event_kudos_gravity_wield_1310_to_1510_2021: Time Is Kudos!: Gravity Wield
+event_kudos_gravity_wield_template: Time Is Kudos!: Gravity Wield
+event_kudos_jumping_for_joy_0510_to_0710_2021: Time Is Kudos!: Jumping For Joy
+event_kudos_jumping_for_joy_0710_to_0910_2021: Time Is Kudos!: Jumping For Joy
+event_kudos_jumping_for_joy_template: Time Is Kudos!: Jumping For Joy
+event_kudos_spin_cycle_0710_to_0910_2021: Time Is Kudos!: Spin Cycle
+event_kudos_spin_cycle_1110_to_1310_2021: Time Is Kudos!: Spin Cycle
+event_kudos_spin_cycle_template: Time Is Kudos!: Spin Cycle
+event_le_halloween_slime_climb_2110_to_0111_2021: TRICK Show
+event_le_halloween_slime_climb: TRICK Show
+event_le_halloween_team_squads_2110_to_0111_2021: TREAT Show (Trios)
+event_le_halloween_team_squads: TREAT Show (Trios)
+event_new_year_s6: Bean Body Ready
+event_no_teams_1406_to_1606_2021: No Teams
+event_no_teams_2708_to_3008_2021: No Teams
+event_no_teams_3105_to_0206_2021: No Teams
+event_no_teams: No Teams
+event_only_basketfall_1010_1010_21: Slam Dunk
+event_only_basketfall_1204_to_1404_2021: Slam Dunk
+event_only_basketfall_2903_to_3103_2021: Slam Dunk
+event_only_basketfall_3105_to_0206_2021: Slam Dunk
+event_only_basketfall: Slam Dunk
+event_only_bubbles_2507_to_2807_2021: Bubble Trouble Trials
+event_only_bubbles_2809_to_0110_2021: Bubble Trouble Trials
+event_only_bubbles_2809_to_0111_2021: Bubble Trouble Trials
+event_only_bubbles_template: Bubble Trouble Trials
+event_only_button_bashers_1208_to_1508_2021: Button Basher Royale
+event_only_button_bashers_template: Button Basher Royale
+event_only_drumtop_0108_to_0308_2021: Lily Leapers Limbo
+event_only_drumtop_template: Lily Leapers Limbo
+event_only_fall_ball_0911_to_1311_2021: Fall Ball Cup
+event_only_fall_ball_1005_to_1205_2021: Fall Ball Cup
+event_only_fall_ball_1501_to_1901: Fall Ball Cup
+event_only_fall_ball_custom_lobby: Fall Ball Cup
+event_only_fall_ball_template_0903_to_1103_2021: Fall Ball Cup
+event_only_fall_ball_template: Fall Ball Cup
+event_only_finals_1312_to_1512_2021: Finals Marathon
+event_only_finals_2812_to_3112_2021: Finals Marathon
+event_only_finals_template: Finals Marathon
+event_only_floor_fall_0110_to_0410_2021: Hex-a-gone Trials
+event_only_floor_fall_0501_to_0701: Hex-a-gone Trials
+event_only_floor_fall_0611_to_1011_2021: Hex-a-gone Trials
+event_only_floor_fall_0705_to_0905_2021: Hex-a-gone Trials
+event_only_floor_fall_0710_0710_21: Hex-a-gone Trials
+event_only_floor_fall_0910_0910_21: Hex-a-gone Trials
+event_only_floor_fall_1203_to_1403_2021: Hex-a-gone Trials
+event_only_floor_fall_2012_to_2312_2021: Hex-a-gone Trials
+event_only_floor_fall_2302_to_2502_2021: Hex-a-gone Trials
+event_only_floor_fall_2702_to_0103_2021: Hex-a-gone Trials
+event_only_floor_fall_custom_lobby: Hex-a-gone Trials
+event_only_floor_fall_low_grav_0306_to_0606_2021: Hex-a-4041 Trials
+event_only_floor_fall_low_grav_0609_0909: Hex-a-4041 Trials
+event_only_floor_fall_low_grav_0907_to_1107_2021: Hex-a-4041 Trials
+event_only_floor_fall_low_grav: Hex-a-4041 Trials
+event_only_floor_fall_template: Hex-a-gone Trials
+event_only_hard_mode_0111_to_0511_2021: Hard Mode
+event_only_hard_mode_0801_to_1101_2022: Hard Mode
+event_only_hard_mode_1902_to_2202_2021: Hard Mode
+event_only_hard_mode_2001_to_2401: Hard Mode
+event_only_hard_mode_2104_to_2404_2021: Hard Mode
+event_only_hard_mode_2111_to_2711: Hard Mode
+event_only_hard_mode_2602_to_0103_2021: Hard Mode
+event_only_hard_mode_2809_3009: Hard Mode
+event_only_hard_mode_template: Hard Mode
+event_only_hoverboard_0207_to_0507_2021: Hoverboarding Time
+event_only_hoverboard_template: Hoverboarding Time
+event_only_jump_club_0603_to_0803_2021: Jump Around
+event_only_jump_club_1202_to_1402_2021: Jump Around
+event_only_jump_club_1204_to_1404_2021: Jump Around
+event_only_jump_club_1309_1609_21: Jump Around
+event_only_jump_club_1801_to_2101_2022: Jump Around
+event_only_jump_club_2406_to_2706_2021: Jump Around
+event_only_jump_club_custom_lobby: Jump Around
+event_only_jump_club_template: Jump Around
+event_only_races_0810_to_2210: Gauntlet Showdown
+event_only_races_any_final_0611_to_0911: Gauntlet Showdown
+event_only_races_any_final_1311_to_1611_2021: Gauntlet Showdown
+event_only_races_any_final_1502_to_1802_2021: Gauntlet Showdown
+event_only_races_any_final_2201_to_2501_2022: Gauntlet Showdown
+event_only_races_any_final_2210_to_2910: Gauntlet Showdown
+event_only_races_any_final_2308_to_2608_2021: Gauntlet Showdown
+event_only_races_any_final_2310_to_2910: Gauntlet Showdown
+event_only_races_any_final_2504_to_2804_2021: Gauntlet Showdown
+event_only_races_any_final_template: Gauntlet Showdown
+event_only_races_no_lava_2705_to_3005_2021: Gauntlet Showdown
+event_only_races_no_lava_template: Gauntlet Showdown
+event_only_races_template: Gauntlet Showdown
+event_only_roll_out_0410_to_0710_2021: Roll Call
+event_only_roll_out_1504_to_1704_2021: Roll Call
+event_only_roll_out_1507_to_1607_2021: Roll Call
+event_only_roll_out_2812_to_3112_2021: Roll Call
+event_only_roll_out_2910_3110_21: Roll Call
+event_only_roll_out_custom_lobby: Roll Call
+event_only_roll_out: Roll Call
+event_only_season_2_variation_1011_to_1611: Medieval Mix Up
+event_only_season_2_variation_template: Medieval Mix Up
+event_only_season_3_variation_0202_to_0702_2021: Mix it Up!
+event_only_season_3_variation_template: Mix it Up!
+event_only_season_4_0204_to_0404_2021: FG 4041
+event_only_season_4_0706_to_0906_2021: FG 4041
+event_only_season_4_2203_to_2803_2021: FG 4041
+event_only_season_4_custom_lobby: FG 4041
+event_only_season_4_variation_1305_to_1905_2021: Mix it Up!
+event_only_season_4_variation_template: Mix it Up!
+event_only_season_4: FG 4041
+event_only_season_5_0309_1209: Welcome to the Jungle
+event_only_season_5_0309_to_0609_2021: Welcome to the Jungle
+event_only_season_5_2007_to_2407_2021: Welcome to the Jungle
+event_only_season_5_template: Welcome to the Jungle
+event_only_season_5_variation_0511_to_0911_2021: Mix it Up!
+event_only_season_5_variation_2510_2810_21: Mix it Up!
+event_only_season_5_variation_3108_0509_21: Mix it Up!
+event_only_season_5_variation_template: Mix it Up!
+event_only_season_6_launch_party: Fall Guys Fiesta!
+event_only_season_6_template: Fall Guys Fiesta!
+event_only_slime_climb_0504_to_0804_2021: Slime Climb Time
+event_only_slime_climb_1401_to_1701_2022: Slime Climb Time
+event_only_slime_climb_2_0502_to_0702_2022: Slimescraper Time
+event_only_slime_climb_2_0709_to_0909_2021: Slimescraper Time
+event_only_slime_climb_2_1009_1209: Slimescraper Time
+event_only_slime_climb_2_1706_to_2006_2021: Slimescraper Time
+event_only_slime_climb_2_1707_to_1907_2021: Slimescraper Time
+event_only_slime_climb_2_2705_to_3005_2021: Slimescraper Time
+event_only_slime_climb_2_template: Slimescraper Time
+event_only_slime_climb: Slime Climb Time
+event_only_survival_0512_to_1112: Slime Survivors
+event_only_survival_0607_to_0807_2021: Slime Survivors
+event_only_survival_0810_0810_21: Slime Survivors
+event_only_survival_0904_to_1104_2021: Slime Survivors
+event_only_survival_1503_to_1803_2021: Slime Survivors
+event_only_survival_1902_to_2202_2021: Slime Survivors
+event_only_survival_2302_to_2602_2021: Slime Survivors
+event_only_survival_2501_to_0102_2021: Slime Survivors
+event_only_survival_2501_to_3101: Slime Survivors
+event_only_survival_2910_to_1211: Slime Survivors
+event_only_survival_2912_to_0401: Slime Survivors
+event_only_survival_3008_to_0209_2021: Slime Survivors
+event_only_survival_3010_to_0511: Slime Survivors
+event_only_survival_template: Slime Survivors
+event_only_thin_ice_0601_to_0701_2022: Thin Ice Trials
+event_only_thin_ice_1903_to_2203_2021: Thin Ice Trials
+event_only_thin_ice_2510_to_2910_2021: Thin Ice Trials
+event_only_thin_ice_2904_to_0205_2021: Thin Ice Trials
+event_only_thin_ice_template: Thin Ice Trials
+event_only_tip_toe_0101_to_0301_2022: Tip Toe Tournament
+event_only_tip_toe_2111_to_2511_2021: Tip Toe Tournament
+event_only_tip_toe_2708_to_2908_2021: Tip Toe Tournament
+event_only_tip_toe_template: Tip Toe Tournament
+event_oriole_0612_to_1212_2021: Aloy's Blaze Canister Mayhem
+event_oriole_template: Aloy's Blaze Canister Mayhem
+event_s6_651_template: PLACEHOLDER SHOW
+event_season_2_highlight_1011_to_1611: Medieval Madness
+event_season_2_highlight_template: Medieval Madness
+event_season_3_highlight_1512_to_1912: Winter Knockout
+event_season_3_highlight_2312_to_2812: Winter Knockout
+event_season_3_highlight_template: Winter Knockout
+event_sports_2907_to_3107_2021: Sports Fest
+event_sports_suddendeath_squads_0401_to_0501_2022: Golden Goal Challenge
+event_sports_suddendeath_squads: Golden Goal Challenge
+event_sports_template: Sports Fest
+event_star_show_ninja_2012_to_2212: Star Show: Ninja
+event_star_show_ninja: Star Show: Ninja
+event_star_show_northernlion_1711_to_2011: Star Show: Northernlion
+event_star_show_northernlion: Star Show: Northernlion
+event_tail_tag_april_show_0104_to_0204_2021: ERROR 01APR
+event_tail_tag_april_show: ERROR 01APR
+event_test_season_5: Welcome to the Jungle
+event_twitch_rivals_2303_2021: Twitch Rivals
+event_twitch_rivals: Twitch Rivals
+event_vulture_1612_to_2712_2021: Nice List (Squads)
+event_vulture_template: Nice List (Squads)
+event_xtreme_fall_guys_1006_to_1306_2021: X-treme Fall Guys
+event_xtreme_fall_guys_1510_to_1810_2021: X-treme Fall Guys
+event_xtreme_fall_guys_1608_to_1908_2021: X-treme Fall Guys
+event_xtreme_fall_guys_1710_to_2110_2021: X-treme Fall Guys
+event_xtreme_fall_guys_2005_to_2205_2021: X-treme Fall Guys
+event_xtreme_fall_guys_2601_to_3001_2022: X-treme Fall Guys
+event_xtreme_fall_guys_squads_0101_to_0301_2022: X-treme Squads
+event_xtreme_fall_guys_squads_0912_to_1212_2021: X-treme Squads
+event_xtreme_fall_guys_squads_template: X-treme Squads
+event_xtreme_fall_guys_template: X-treme Fall Guys
+event_yeetus_0305_to_0605_2021: Big Yeetus Tour
+event_yeetus_0402_to_0702_2022: Big Yeetus Tour
+event_yeetus_1207_to_1407_2021: Big Yeetus Tour
+event_yeetus_2811_to_0412: Big Yeetus Tour
+event_yeetus_template: Big Yeetus Tour
+halloween_delete_this: Slime Climb Time
+invisibeans_template: SWEET THIEVES
+main_show_2player: Main Show (2 Player)
+main_show: Main Show
+old_show: Update Required
+pilot_show: Main Show
+qa_only_invisibeans: SWEET THIEVES
+show_episode_level-variation_wave4_01: Variation Show 4
+show_episode_level-variation_wave4_02: Variation Show 3
+show_episode_level-variation_wave4_03: Variation Show 2
+show_episode_level-variation_wave4_04: Variation Show 1
+show_episode_level-variation_wave5_01: Mix it Up!
+show_episode_level-variation_wave5_02: Mix it Up!
+show_episode_level-variation_wave5_03: Mix it Up!
+show_episode_level-variation_wave5_04: Mix it Up!
+show_playtest_bluejay: playtest_bluejay
+spectator_show: Spectator Sport
+squad_show_2player_laps: SQUAD SHOW
+squad_show_2player: SQUAD SHOW
+squad_show_survival: DEBUG Squad Show Survival
+squad_show_team_2player: Connection Error
+squad_show: SQUAD SHOW
+squads_2player_0612_to_1912_2021: Squads Duos
+squads_2player_0710_1010_21: Squads Duos
+squads_2player_1511_to_2211_2021: Squads Duos
+squads_2player_1608_to_2908_2021: Squads Duos
+squads_2player_1801_to_3001_2022: Squads Duos
+squads_2player_1810_2410_21: Squads Duos
+squads_2player_2007_to_0108_2021: Squads Duos
+squads_2player_2009_to_0310: Squads Duos
+squads_2player_2412_to_2712_2021: Squads Duos
+squads_2player_3011_to_0312_2021: Squads Duos
+squads_2player_automation: Squads Duos
+squads_2player_template: Squads Duos
+squads_3player_0111_1511_21: Squads Trios
+squads_3player_0208_to_1508_2021: Squads Trios
+squads_3player_0401_to_1301_2022: Squads Trios
+squads_3player_04012022_to_13012022: Squads Trios
+squads_3player_0410_1810_21: Squads Trios
+squads_3player_0802_to_1702_2022: Squads Trios
+squads_3player_1110_1810_21: Squads Trios
+squads_3player_1309_to_1909_2021: Squads Trios
+squads_3player_3008_to_0209_2021: Squads Trios
+squads_3player_3101_to_0402_2022: Squads Trios
+squads_3player_automation: Squads Trios
+squads_3player_template: Squads Trios
+squads_4player_0111_no_end: Squads Show
+squads_4player_04012022_to_13012022: Squads Show
+squads_4player_1312_to_2312_2021: Squads Show
+squads_4player_2203_to_0404_2021: Squads Show
+squads_4player_2608_2009: Squads Show
+squads_4player_2709_end: Squads Show
+squads_4player_2809_to_2110_2021: Squads Show
+squads_4player_2812_no_end: Squads Show
+squads_4player_3011_to_0812_2021: Squads Show
+squads_4player: Squads Show
+squads_just_points_rounds_test: Squads Show
+squads_qa_1: DEBUG Squad Show
+squads_qa_2: DEBUG Squad Show
+squads_qa_3: DEBUG Squad Show
+squads_qa_4: DEBUG Squad Show
+squads_qa_5: DEBUG Squad Show
+squads_qa_debug: DEBUG Squad Show
+teams_show: Connection Error
+toms_main_show_5_2: Main Show
+toms_show2: Toms Show 2

@@ -15,6 +15,7 @@ using FGClient.Customiser;
 using FallGuys.Player.Protocol.Client.Cosmetics;
 using FG.Common.Definition;
 using FG.Common.CMS;
+using System.IO;
 
 namespace fallguyloadrold
 {
@@ -277,20 +278,35 @@ namespace fallguyloadrold
         {
             if (__instance._lastActiveShowDefs.Count < 1)
             {
+                string[] selectedRoundList = File.ReadAllLines($"{Paths.PluginPath}/fallguyloadr/CMS/selectedshows.txt");
                 var Shows = Resources.FindObjectsOfTypeAll<ShowsSO>().FirstOrDefault().Shows;
-                List<string> showIDs = new List<string>();
-                foreach (string id in Shows.Keys)
-                {
-                    showIDs.Add(id);
-                }
 
-                for (int i = 0; i < 5; i++)
+                if (Plugin.RandomShows.Value || selectedRoundList.Length < 5)
                 {
-                    int randomnumber = UnityEngine.Random.Range(0, showIDs.Count);
-                    ShowDef showDef = new ShowDef();
-                    showDef.ShowFromCMS = Shows[showIDs[randomnumber]];
-                    showDef.Index = i;
-                    __instance._lastActiveShowDefs.Add(showDef);
+                    List<string> showIDs = new List<string>();
+                    foreach (string id in Shows.Keys)
+                    {
+                        showIDs.Add(id);
+                    }
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int randomnumber = UnityEngine.Random.Range(0, showIDs.Count);
+                        ShowDef showDef = new ShowDef();
+                        showDef.ShowFromCMS = Shows[showIDs[randomnumber]];
+                        showDef.Index = i;
+                        __instance._lastActiveShowDefs.Add(showDef);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        ShowDef showDef = new ShowDef();
+                        showDef.ShowFromCMS = Shows[selectedRoundList[i]];
+                        showDef.Index = i;
+                        __instance._lastActiveShowDefs.Add(showDef);
+                    }
                 }
             }
 

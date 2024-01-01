@@ -29,6 +29,7 @@ using FallGuys.Player.Protocol.Client.Cosmetics;
 using Levels.Rollout;
 using FGClient.Customiser;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using BepInEx.Configuration;
 
 namespace fallguyloadrold
 {
@@ -36,8 +37,12 @@ namespace fallguyloadrold
     public class Plugin : BasePlugin
     {
         public const string version = "1.3.0";
+        public static ConfigEntry<bool> RandomShows { get; set; }
+
         public override void Load()
         {
+            RandomShows = Config.Bind("Config", "Random Shows", true, "Whether to show random shows or shows selected by you in the selectedshows.txt");
+
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<Fixes.ButtonFix>();
             ClassInjector.RegisterTypeInIl2Cpp<FallGuyBehaviour>();
@@ -325,29 +330,34 @@ namespace fallguyloadrold
             roundsData = roundSO.Rounds;
         }
 
-        public void ListCMSVariations()
+        public void ListShows()
         {
             LoadCMS();
-            string path = Paths.PluginPath + "/fallguyloadr/CMS/cmsroundlistS6.txt";
+            string path = Paths.PluginPath + "/fallguyloadr/CMS/showlist.txt";
             if (File.Exists(path))
             {
                 File.WriteAllText(path, string.Empty);
             }
             else
             {
-                File.Create(path);
-                ListCMSVariations();
+                File.Create(path).Close();
+                ListShows();
             }
             StreamWriter writer = new StreamWriter(path);
-            foreach (var key in roundsData.Keys)
+            ShowsData showsData = CMSLoader.Instance.CMSData.Shows;
+            foreach (var key in showsData.Keys)
             {
-                Round round = roundsData[key];
-                string round_name = CMSLoader.Instance._localisedStrings.GetString(round.DisplayName);
-                round_name = round_name.Replace("[", "").Replace("]", "");
-                string scene_name = round.SceneName;
-                string text = $"{round_name}: {scene_name}: {key}";
-                Debug.Log(text);
-                writer.WriteLine(text);
+                Show show = showsData[key];
+                try
+                {
+                    string showName = show.ShowName.Text;
+
+                string text = $"{key}: {showName}";
+
+                    Debug.Log(text);
+                    writer.WriteLine(text);
+                }
+                catch { }
             }
             writer.Close();
             var content = File.ReadAllLines(path);
