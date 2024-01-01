@@ -119,7 +119,6 @@ namespace fallguyloadrold
                     {
                         GUI.Label(new Rect(47f, 185f, 100f, 30f), "Press H");
                         text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
-
                     }
                 }
                 else
@@ -242,6 +241,7 @@ namespace fallguyloadrold
                 }
                 catch { }
                 RolloutManager rolloutManager = FindObjectOfType<RolloutManager>();
+                PlayerRatioedBulkItemSpawner bulkItemSpawner = FindObjectOfType<PlayerRatioedBulkItemSpawner>();
 
                 if (rolloutManager != null)
                 {
@@ -250,6 +250,29 @@ namespace fallguyloadrold
                     {
                         rolloutManager.InstantiateRing(index, 1);
                         index++;
+                    }
+                }
+
+                if (bulkItemSpawner != null)
+                {
+                    Transform ItemParent;
+
+                    if (bulkItemSpawner.ItemParent != null)
+                    {
+                        ItemParent = bulkItemSpawner.ItemParent;
+                    }
+                    else
+                    {
+                        ItemParent = bulkItemSpawner.ItemParents[0];
+                    }
+
+                    int spawns = ItemParent.GetChildCount();
+
+                    for (int i = 0; i < spawns; i++)
+                    {
+                        int randomnumber = UnityEngine.Random.Range(0, spawns - 1);
+                        Transform spawn = ItemParent.GetChild(randomnumber);
+                        Instantiate(bulkItemSpawner.ItemPrefab, spawn.position, spawn.rotation);
                     }
                 }
             }
