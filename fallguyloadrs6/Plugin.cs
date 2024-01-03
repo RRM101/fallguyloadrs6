@@ -478,7 +478,7 @@ namespace fallguyloadrold
             loadingScreen.Init(FindObjectOfType<UICanvas>(), new ScreenMetaData { Transition = ScreenTransitionType.FadeOut, TransitionTime = 0.25f });
             loadingScreen.HideScreen();
 
-            if (Plugin.Theme.Value < 6 && Plugin.Theme.Value > 1)
+            if (Plugin.Theme.Value < 6 && Plugin.Theme.Value > 0)
             {
                 string jsonpath = $"{Paths.PluginPath}/fallguyloadr/Assets/Themes/Season{Plugin.Theme.Value}_Theme.json";
                 string jsondata = File.ReadAllText(jsonpath);
@@ -488,8 +488,15 @@ namespace fallguyloadrold
                 if (Plugin.Theme.Value != 5)
                 {
                     GameObject background = GameObject.Find("Generic_UI_Season6Background_Canvas");
-                    background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().sprite = PNGtoSprite($"{Paths.PluginPath}/fallguyloadr/Assets/Themes/{theme.pattern}", 0, 0);
-                    background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+                    if (theme.pattern != null)
+                    {
+                        background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().sprite = PNGtoSprite($"{Paths.PluginPath}/fallguyloadr/Assets/Themes/{theme.pattern}", 0, 0);
+                        background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+                    }
+                    else
+                    {
+                        Destroy(background.transform.GetChild(0).FindChild("Pattern").gameObject);
+                    }
                     background.transform.GetChild(0).FindChild("Circles").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
                     background.transform.GetChild(0).FindChild("Backdrop").gameObject.GetComponent<Image>().color = new Color(theme.uppergradientrgb[0], theme.uppergradientrgb[1], theme.uppergradientrgb[2]);
                     background.transform.GetChild(0).FindChild("Gradient").gameObject.GetComponent<Image>().color = new Color(theme.lowergradientrgb[0], theme.lowergradientrgb[1], theme.lowergradientrgb[2]);

@@ -1,0 +1,8 @@
+{
+	"circlesrgb": [0.973, 0.82, 0.004],
+	"uppergradientrgb": [0.976, 0.769, 0.0],
+	"lowergradientrgb": [0.976, 0.816,0.282],
+	"pattern": null,
+	"music_bank": "BNK_Music_Menu_Default",
+	"music_event": "Mus_MainMenu_LP"
+}
