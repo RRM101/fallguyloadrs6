@@ -488,18 +488,10 @@ namespace fallguyloadrold
                 if (Plugin.Theme.Value != 5)
                 {
                     GameObject background = GameObject.Find("Generic_UI_Season6Background_Canvas");
-                    if (theme.pattern != null)
-                    {
-                        background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().sprite = PNGtoSprite($"{Paths.PluginPath}/fallguyloadr/Assets/Themes/{theme.pattern}", 0, 0);
-                        background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
-                    }
-                    else
-                    {
-                        Destroy(background.transform.GetChild(0).FindChild("Pattern").gameObject);
-                    }
-                    background.transform.GetChild(0).FindChild("Circles").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
-                    background.transform.GetChild(0).FindChild("Backdrop").gameObject.GetComponent<Image>().color = new Color(theme.uppergradientrgb[0], theme.uppergradientrgb[1], theme.uppergradientrgb[2]);
-                    background.transform.GetChild(0).FindChild("Gradient").gameObject.GetComponent<Image>().color = new Color(theme.lowergradientrgb[0], theme.lowergradientrgb[1], theme.lowergradientrgb[2]);
+                    SetBackground(theme, background);
+
+                    GameObject loadingScreenBackground = Resources.FindObjectsOfTypeAll<LoadingGameScreenViewModel>().FirstOrDefault().gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+                    SetBackground(theme, loadingScreenBackground);
                 }
                 else
                 {
@@ -529,6 +521,22 @@ namespace fallguyloadrold
             int crowns = UnityEngine.Random.Range(0, 2000);
             crownRank.SetPlayerLevel(new PlayerLevelData(crowns));
             Destroy(loadingScreen.gameObject);
+        }
+
+        public void SetBackground(Theme theme, GameObject background)
+        {
+            if (theme.pattern != null)
+            {
+                background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().sprite = PNGtoSprite($"{Paths.PluginPath}/fallguyloadr/Assets/Themes/{theme.pattern}", 0, 0);
+                background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+            }
+            else
+            {
+                Destroy(background.transform.GetChild(0).FindChild("Pattern").gameObject);
+            }
+            background.transform.GetChild(0).FindChild("Circles").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+            background.transform.GetChild(0).FindChild("Backdrop").gameObject.GetComponent<Image>().color = new Color(theme.uppergradientrgb[0], theme.uppergradientrgb[1], theme.uppergradientrgb[2]);
+            background.transform.GetChild(0).FindChild("Gradient").gameObject.GetComponent<Image>().color = new Color(theme.lowergradientrgb[0], theme.lowergradientrgb[1], theme.lowergradientrgb[2]);
         }
 
         public void LoadRandomRound()
