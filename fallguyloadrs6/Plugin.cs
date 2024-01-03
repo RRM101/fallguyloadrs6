@@ -30,6 +30,8 @@ using Levels.Rollout;
 using FGClient.Customiser;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using BepInEx.Configuration;
+using System.Text.Json;
+using UnityEngine.UI;
 
 namespace fallguyloadrold
 {
@@ -38,10 +40,12 @@ namespace fallguyloadrold
     {
         public const string version = "1.3.0";
         public static ConfigEntry<bool> RandomShows { get; set; }
+        public static ConfigEntry<int> Theme { get; set; }
 
         public override void Load()
         {
-            RandomShows = Config.Bind("Config", "Random Shows", true, "Whether to show random shows or shows selected by you in the selectedshows.txt");
+            RandomShows = Config.Bind("Config", "Random Shows", true, "Whether to show random shows or shows selected by you in selectedshows.txt");
+            Theme = Config.Bind("Config", "Theme", 6, "Choose the theme. Maximum 6, Minimum 1");
 
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<Fixes.ButtonFix>();
@@ -75,6 +79,7 @@ namespace fallguyloadrold
         public static LoaderBehaviour loaderBehaviour;
         string musicbank;
         string musicevent;
+        string menumusicbank;
         bool showui = true;
         bool whatisthis = false;
         uint lastplayernetid;
@@ -230,7 +235,7 @@ namespace fallguyloadrold
                 RuntimeManager.LoadBank("BNK_UI_MainMenu");
                 AudioManager.PlayOneShot("MUS_InGame_PreparationPhase");
                 cameraDirector = FindObjectOfType<CameraDirector>();
-                RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
+                RuntimeManager.UnloadBank(menumusicbank);
                 Destroy(TopBar);
                 Destroy(MenuBuilder);
                 SpawnFallGuy();
@@ -472,6 +477,29 @@ namespace fallguyloadrold
             LoadingScreenViewModel loadingScreen = FindObjectOfType<LoadingScreenViewModel>();
             loadingScreen.Init(FindObjectOfType<UICanvas>(), new ScreenMetaData { Transition = ScreenTransitionType.FadeOut, TransitionTime = 0.25f });
             loadingScreen.HideScreen();
+
+            if (Plugin.Theme.Value < 6 && Plugin.Theme.Value > 1)
+            {
+                string jsonpath = $"{Paths.PluginPath}/fallguyloadr/Assets/Themes/Season{Plugin.Theme.Value}_Theme.json";
+                string jsondata = File.ReadAllText(jsonpath);
+                Theme theme = JsonSerializer.Deserialize<Theme>(jsondata);
+                CMSLoader.Instance.CMSData.SettingsAudio["main_menu_music_soundbank"].Value = theme.music_bank;
+                CMSLoader.Instance.CMSData.SettingsAudio["main_menu_music_event"].Value = theme.music_event;
+                if (Plugin.Theme.Value != 5)
+                {
+                    GameObject background = GameObject.Find("Generic_UI_Season6Background_Canvas");
+                    background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().sprite = PNGtoSprite($"{Paths.PluginPath}/fallguyloadr/Assets/Themes/{theme.pattern}", 0, 0);
+                    background.transform.GetChild(0).FindChild("Pattern").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+                    background.transform.GetChild(0).FindChild("Circles").gameObject.GetComponent<Image>().color = new Color(theme.circlesrgb[0], theme.circlesrgb[1], theme.circlesrgb[2]);
+                    background.transform.GetChild(0).FindChild("Backdrop").gameObject.GetComponent<Image>().color = new Color(theme.uppergradientrgb[0], theme.uppergradientrgb[1], theme.uppergradientrgb[2]);
+                    background.transform.GetChild(0).FindChild("Gradient").gameObject.GetComponent<Image>().color = new Color(theme.lowergradientrgb[0], theme.lowergradientrgb[1], theme.lowergradientrgb[2]);
+                }
+                else
+                {
+                    GameObject.Find("3D Environment").transform.FindChild("LegacyBackground").gameObject.SetActive(true);
+                }
+            }
+
             try
             {
                 FindObjectOfType<MainMenuManager>().OnSplashScreenComplete();
@@ -480,9 +508,12 @@ namespace fallguyloadrold
             {
                 TopBar.SetActive(true);
                 TopLeftGroup.SetActive(true);
-                RuntimeManager.LoadBank("BNK_Music_Menu_Season_06");
+                RuntimeManager.LoadBank(menumusicbank);
                 AudioManager.PlayOneShot("MUS_MainMenu_Season_06_LP");
             }
+
+            CMSLoader.Instance.CMSData.SettingsAudio.TryGetValue("main_menu_music_soundbank", out var value);
+            menumusicbank = value.Value;
             LoadCustomizations();
             FindObjectOfType<MainMenuManager>().ApplyOutfit();
             yield return new WaitForSeconds(0.25f);
@@ -616,7 +647,7 @@ namespace fallguyloadrold
                 Transition = ScreenTransitionType.FadeInAndOut,
                 ScreenStack = ScreenStackType.Default
             });
-            RuntimeManager.UnloadBank("BNK_Music_Menu_Season_06");
+            RuntimeManager.UnloadBank(menumusicbank);
             var loadingaudioevent = AudioManager.CreateAudioEvent("MUS_InGame_Loading");
             loadingaudioevent.Value.start();
             yield return new WaitForSeconds(12);

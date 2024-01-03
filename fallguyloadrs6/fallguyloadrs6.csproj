@@ -88,5 +88,8 @@
 	    <Reference Include="Catapult.Modules.Items.Protocol">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\interop\Catapult.Modules.Items.Protocol.dll</HintPath>
     </Reference>
+	    <Reference Include="UnityEngine.UI">
+	      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\UnityEngine.UI.dll</HintPath>
+	    </Reference>
   </ItemGroup>
 </Project>
