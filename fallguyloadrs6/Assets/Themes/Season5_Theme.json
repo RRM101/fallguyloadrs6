@@ -1,8 +1,8 @@
 {
-	"circlesrgb": null,
-	"uppergradientrgb": null,
-	"lowergradientrgb": null,
-	"pattern": null,
+	"circlesrgb": [0.157, 0.631, 0.635],
+	"uppergradientrgb": [0.122, 0.584, 0.60],
+	"lowergradientrgb": [0.741, 0.792, 0.478],
+	"pattern": "Season5_Pattern.png",
 	"music_bank": "BNK_Music_Menu_Season_05",
 	"music_event": "MUS_MainMenu_Season_05_LP"
 }

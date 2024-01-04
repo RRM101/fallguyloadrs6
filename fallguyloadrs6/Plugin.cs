@@ -485,18 +485,11 @@ namespace fallguyloadrold
                 Theme theme = JsonSerializer.Deserialize<Theme>(jsondata);
                 CMSLoader.Instance.CMSData.SettingsAudio["main_menu_music_soundbank"].Value = theme.music_bank;
                 CMSLoader.Instance.CMSData.SettingsAudio["main_menu_music_event"].Value = theme.music_event;
-                if (Plugin.Theme.Value != 5)
-                {
-                    GameObject background = GameObject.Find("Generic_UI_Season6Background_Canvas");
-                    SetBackground(theme, background);
+                GameObject background = GameObject.Find("Generic_UI_Season6Background_Canvas");
+                SetBackground(theme, background);
 
-                    GameObject loadingScreenBackground = Resources.FindObjectsOfTypeAll<LoadingGameScreenViewModel>().FirstOrDefault().gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
-                    SetBackground(theme, loadingScreenBackground);
-                }
-                else
-                {
-                    GameObject.Find("3D Environment").transform.FindChild("LegacyBackground").gameObject.SetActive(true);
-                }
+                GameObject loadingScreenBackground = Resources.FindObjectsOfTypeAll<LoadingGameScreenViewModel>().FirstOrDefault().gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+                SetBackground(theme, loadingScreenBackground);
             }
 
             try
