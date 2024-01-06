@@ -92,10 +92,14 @@ namespace fallguyloadrold
         GameObject fallGuy;
         CameraDirector cameraDirector;
         Round mapSet;
-        ShowDef currentShowDef;
+        public ShowDef currentShowDef;
 
         public void Start()
         {
+            if (loaderBehaviour != null)
+            {
+                Destroy(this);
+            }
             IntroCompleteAction = IntroComplete;
             loaderBehaviour = this;
             RuntimeManager.LoadBank("BNK_PlayGo");
@@ -117,7 +121,7 @@ namespace fallguyloadrold
                     GUI.Box(new Rect(10f, 10f, 120f, 155f), "");
                     GUI.Label(new Rect(30f, 15f, 100f, 30f), "fallguy loadr");
                     text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
-                    single = GUI.Button(new Rect(20f, 40f, 100f, 25f), "select round");
+                    single = GUI.Button(new Rect(20f, 40f, 100f, 25f), "load");
                     random = GUI.Button(new Rect(20f, 70f, 100f, 25f), "load random");
                     imageloader = GUI.Button(new Rect(20f, 130f, 100f, 25f), "Image Loader");
                     if (whatisthis)
@@ -535,6 +539,7 @@ namespace fallguyloadrold
         public void LoadRandomRound()
         {
             LoadCMS();
+            currentShowDef = null;
             RuntimeManager.UnloadBank("BNK_SFX_WinnerScreen");
             var lines = File.ReadAllLines(Paths.PluginPath + "/fallguyloadr/CMS/randomrounds.txt");
             int randomroundnumber = UnityEngine.Random.Range(0, lines.Length - 1);
@@ -751,6 +756,7 @@ namespace fallguyloadrold
                 {
                     RuntimeManager.UnloadBank(musicbank);
                 }
+                currentShowDef = null;
                 LoadCMS();
                 NetworkGameData.SetGameOptionsFromRoundData(roundsData[text]);
                 LoadCMSScene(false);

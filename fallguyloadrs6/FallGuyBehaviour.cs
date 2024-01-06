@@ -17,9 +17,11 @@ namespace fallguyloadrold
         MPGNetObject mpgNetObject;
         bool isXtreme = false;
         bool xtremePopupOpened = false;
+        bool isInShow = false;
 
         public void Start()
         {
+            isInShow = LoaderBehaviour.loaderBehaviour.currentShowDef == null ? false : true;
             checkpointManager = FindObjectOfType<CheckpointManager>();
             rigidbody = GetComponent<Rigidbody>();
             mpgNetObject = GetComponent<MPGNetObject>();
