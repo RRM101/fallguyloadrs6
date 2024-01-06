@@ -45,10 +45,14 @@ namespace fallguyloadrold
             if (__instance.GameStateView.IsGamePlaying)
             {
                 __instance.GameStateView.PrevSimulationFixedTime += Time.fixedDeltaTime;
+                __instance.GameStateView.PrevSimulationFixedDeltaTime = Time.fixedDeltaTime;
+                __instance.GameStateView.PrevSimulationDeltaTime = Time.fixedDeltaTime;
+                __instance.GameStateView.PrevSimulationTime += Time.fixedDeltaTime;
             }
             else
             {
                 __instance.GameStateView.PrevSimulationFixedTime = 0;
+                __instance.GameStateView.PrevSimulationTime = 0;
             }
             return false;
         }
@@ -57,16 +61,6 @@ namespace fallguyloadrold
         [HarmonyPrefix]
         static bool GGSCu(GlobalGameStateClient __instance)
         {
-            if (__instance.GameStateView.IsGamePlaying)
-            {
-                __instance.GameStateView.PrevSimulationFixedDeltaTime = Time.fixedDeltaTime;
-                __instance.GameStateView.PrevSimulationDeltaTime = Time.deltaTime;
-                __instance.GameStateView.PrevSimulationTime += Time.deltaTime;
-            }
-            else
-            {
-                __instance.GameStateView.PrevSimulationTime = 0;
-            }
             return false;
         }
 
