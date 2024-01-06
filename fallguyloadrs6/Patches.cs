@@ -16,6 +16,7 @@ using FallGuys.Player.Protocol.Client.Cosmetics;
 using FG.Common.Definition;
 using FG.Common.CMS;
 using System.IO;
+using FG.Common.Character;
 
 namespace fallguyloadrold
 {
@@ -384,6 +385,14 @@ namespace fallguyloadrold
         static bool SubMenuNavigationHandleConfigureRequestFailed(SubMenuNavigation __instance)
         {            
             return false;
+        }
+
+        [HarmonyPatch(typeof(MotorFunctionGrabStateGrabCrown), "Begin")]
+        [HarmonyPrefix]
+        static bool MotorFunctionGrabStateGrabCrownBegin(MotorFunctionGrabStateGrabCrown __instance)
+        {
+            LoaderBehaviour.loaderBehaviour.Win();
+            return true;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace fallguyloadrold
             LoaderBehaviour.isgameplaying = false;
             RoundEndedScreenViewModel.Show(null);
             AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
-            yield return new WaitForSeconds(3.5f);
+            yield return new WaitForSeconds(3);
             QualifiedScreenViewModel.Show("qualified", null);
             AudioManager.PlayGameplayEndAudio(true);
             yield return new WaitForSeconds(3.5f);

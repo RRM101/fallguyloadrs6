@@ -732,6 +732,24 @@ namespace fallguyloadrold
             }
         }
 
+        IEnumerator WinEnumerator()
+        {
+            isgameplaying = false;
+            RuntimeManager.UnloadBank(musicbank);
+            RoundEndedScreenViewModel.Show(null);
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
+            yield return new WaitForSeconds(3);
+            WinnerScreenViewModel.Show("winner", true, null);
+            AudioManager.PlayGameplayEndAudio(true);
+            yield return new WaitForSeconds(3);
+            SceneManager.LoadSceneAsync("Fallguy_Victory_Scene");
+        }
+
+        public void Win()
+        {
+            StartCoroutine(WinEnumerator().WrapToIl2Cpp());
+        }
+
         public void Update()
         {
             GameObject modalMessageObject = null;
