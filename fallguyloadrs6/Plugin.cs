@@ -494,6 +494,9 @@ namespace fallguyloadrold
 
                 GameObject loadingScreenBackground = Resources.FindObjectsOfTypeAll<LoadingGameScreenViewModel>().FirstOrDefault().gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
                 SetBackground(theme, loadingScreenBackground);
+
+                GameObject roundRevealBackground = Resources.FindObjectsOfTypeAll<RoundRevealCarouselViewModel>().FirstOrDefault().gameObject.transform.GetChild(1).transform.GetChild(0).gameObject;
+                SetBackground(theme, roundRevealBackground);
             }
 
             try
