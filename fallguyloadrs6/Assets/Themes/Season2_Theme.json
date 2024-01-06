@@ -1,0 +1,8 @@
+{
+	"circlesrgb": [0.4, 0.192, 0.604],
+	"uppergradientrgb": [0.365, 0.176, 0.553],
+	"lowergradientrgb": [0.498, 0.294, 0.710],
+	"pattern": "Season2_Pattern.png",
+	"music_bank": "BNK_Music_Menu_Season_02",
+	"music_event": "MUS_MainMenu_Season_02_LP"
+}
