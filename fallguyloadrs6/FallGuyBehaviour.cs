@@ -1,7 +1,13 @@
-﻿using FG.Common;
+﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
+using FG.Common;
+using FG.Common.Audio;
+using FGClient;
 using FGClient.UI;
+using FGClient.UI.Core;
+using FMODUnity;
 using Levels.Progression;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +24,7 @@ namespace fallguyloadrold
         bool isXtreme = false;
         bool xtremePopupOpened = false;
         bool isInShow = false;
+        bool hasQualified = false;
 
         public void Start()
         {
@@ -48,6 +55,37 @@ namespace fallguyloadrold
                 OnCloseButtonPressed = quitAction
             };
             PopupManager.Instance.Show(modalMessageData);
+        }
+
+        IEnumerator Qualify()
+        {
+            RuntimeManager.UnloadBank(LoaderBehaviour.musicbank);
+            LoaderBehaviour.isgameplaying = false;
+            RoundEndedScreenViewModel.Show(null);
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
+            yield return new WaitForSeconds(3.5f);
+            QualifiedScreenViewModel.Show("qualified", null);
+            AudioManager.PlayGameplayEndAudio(true);
+            yield return new WaitForSeconds(3.5f);
+            RoundRevealCarouselViewModel roundRevealCarousel = UIManager.Instance.ShowScreen<RoundRevealCarouselViewModel>(new ScreenMetaData
+            {
+                Transition = ScreenTransitionType.FadeInAndOut
+            });
+            LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(LoaderBehaviour.loaderBehaviour.currentShowDef);
+            yield return new WaitForSeconds(5);
+            roundRevealCarousel.HideScreen();
+        }
+
+        void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.GetComponent<EndZoneVFXTrigger>() != null || collision.gameObject.GetComponent<COMMON_ObjectiveReachEndZone>() != null && isInShow)
+            {
+                if (!hasQualified)
+                {
+                    hasQualified = true;
+                    StartCoroutine(Qualify().WrapToIl2Cpp());
+                }
+            }
         }
 
         public void Update()

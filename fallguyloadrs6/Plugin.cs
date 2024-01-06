@@ -77,7 +77,7 @@ namespace fallguyloadrold
         public static bool isgameplaying = false;
         public static Action IntroCompleteAction;
         public static LoaderBehaviour loaderBehaviour;
-        string musicbank;
+        public static string musicbank;
         string musicevent;
         string menumusicbank;
         bool showui = true;
@@ -655,7 +655,7 @@ namespace fallguyloadrold
             isgameplaying = false;
             yield return new WaitForSeconds(delay);
             NetworkGameData.SetGameOptionsFromRoundData(round);
-            LoadingGameScreenViewModel loadingScreen = FindObjectOfType<UIManager>().ShowScreen<LoadingGameScreenViewModel>(new ScreenMetaData
+            LoadingGameScreenViewModel loadingScreen = UIManager.Instance.ShowScreen<LoadingGameScreenViewModel>(new ScreenMetaData
             {
                 Transition = ScreenTransitionType.FadeInAndOut,
                 ScreenStack = ScreenStackType.Default
