@@ -61,12 +61,12 @@ namespace fallguyloadrold
         {
             RuntimeManager.UnloadBank(LoaderBehaviour.musicbank);
             LoaderBehaviour.isgameplaying = false;
-            RoundEndedScreenViewModel.Show(null);
-            AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
-            yield return new WaitForSeconds(3);
             QualifiedScreenViewModel.Show("qualified", null);
             AudioManager.PlayGameplayEndAudio(true);
             yield return new WaitForSeconds(3.5f);
+            RoundEndedScreenViewModel.Show(null);
+            AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
+            yield return new WaitForSeconds(3);
             RoundRevealCarouselViewModel roundRevealCarousel = UIManager.Instance.ShowScreen<RoundRevealCarouselViewModel>(new ScreenMetaData
             {
                 Transition = ScreenTransitionType.FadeInAndOut

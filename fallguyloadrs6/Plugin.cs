@@ -741,7 +741,7 @@ namespace fallguyloadrold
             RuntimeManager.UnloadBank(musicbank);
             RoundEndedScreenViewModel.Show(null);
             AudioManager.PlayOneShot(AudioManager.EventMasterData.RoundOver);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2.5f);
             WinnerScreenViewModel.Show("winner", true, null);
             AudioManager.PlayGameplayEndAudio(true);
             yield return new WaitForSeconds(3);
