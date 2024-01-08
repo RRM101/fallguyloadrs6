@@ -38,7 +38,7 @@ namespace fallguyloadrold
     [BepInPlugin("org.rrm1.fallguyloadr.s6", "fallguyloadr", version)]
     public class Plugin : BasePlugin
     {
-        public const string version = "1.3.0";
+        public const string version = "1.4.0";
         public static ConfigEntry<bool> RandomShows { get; set; }
         public static ConfigEntry<bool> AllRandomRounds { get; set; }
         public static ConfigEntry<int> Theme { get; set; }
