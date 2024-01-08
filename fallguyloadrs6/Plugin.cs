@@ -157,7 +157,7 @@ namespace fallguyloadrold
                 {"imageloader_file_not_found_error_message", "File not found."},
                 {"imageloader_success", "SUCCESS"},
                 {"imageloader_success_message", "Successfully loaded image"},
-                {"fallguys_piracy_title", "Piracy Is No Falling"},
+                {"fallguys_piracy_title", "Piracy Is No Falling"}, // credit to LewanceBoi
                 {"fallguys_piracy_message", "It is a serious crime under copyright law to pirate Fall Guys: Ultimate Knockout.\nExit the game now and delete the software."}
             };
 
