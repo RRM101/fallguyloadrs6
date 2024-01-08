@@ -84,8 +84,16 @@ namespace fallguyloadrold
             {
                 Transition = ScreenTransitionType.FadeInAndOut
             });
-            LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(LoaderBehaviour.loaderBehaviour.currentShowDef);
-            yield return new WaitForSeconds(5);
+            if (isInShow)
+            {
+                LoaderBehaviour.loaderBehaviour.LoadRoundFromShowDef(LoaderBehaviour.loaderBehaviour.currentShowDef);
+                yield return new WaitForSeconds(5);
+            }
+            else
+            {
+                yield return new WaitForSeconds(5);
+                LoaderBehaviour.loaderBehaviour.LoadRandomRound();
+            }
             roundRevealCarousel.HideScreen();
         }
 
