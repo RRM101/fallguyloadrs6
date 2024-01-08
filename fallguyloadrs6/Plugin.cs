@@ -40,11 +40,13 @@ namespace fallguyloadrold
     {
         public const string version = "1.3.0";
         public static ConfigEntry<bool> RandomShows { get; set; }
+        public static ConfigEntry<bool> AllRandomRounds { get; set; }
         public static ConfigEntry<int> Theme { get; set; }
 
         public override void Load()
         {
             RandomShows = Config.Bind("Config", "Random Shows", true, "Whether to show random shows or shows selected by you in selectedshows.txt");
+            AllRandomRounds = Config.Bind("Config", "All Random Rounds", false, "If set to true pressing 'load random' can load any round instead of the ones in randomrounds.txt");
             Theme = Config.Bind("Config", "Theme", 6, "Choose the theme. Maximum 6, Minimum 1");
 
             ClassInjector.RegisterTypeInIl2Cpp<LoaderBehaviour>();
@@ -541,12 +543,27 @@ namespace fallguyloadrold
 
         public void LoadRandomRound()
         {
+            string round_id = null;
             LoadCMS();
             currentShowDef = null;
             RuntimeManager.UnloadBank("BNK_SFX_WinnerScreen");
-            var lines = File.ReadAllLines(Paths.PluginPath + "/fallguyloadr/CMS/randomrounds.txt");
-            int randomroundnumber = UnityEngine.Random.Range(0, lines.Length - 1);
-            string round_id = lines[randomroundnumber];
+            if (!Plugin.AllRandomRounds.Value)
+            {
+                var lines = File.ReadAllLines(Paths.PluginPath + "/fallguyloadr/CMS/randomrounds.txt");
+                int randomroundnumber = UnityEngine.Random.Range(0, lines.Length - 1);
+                round_id = lines[randomroundnumber];
+            }
+            else
+            {
+                List<string> rounds = new List<string>();
+                foreach (string round in roundsData.Keys)
+                {
+                    rounds.Add(round);
+                }
+                int randomnumber = UnityEngine.Random.Range(0, rounds.Count);
+                round_id = rounds[randomnumber];
+            }
+
             StartCoroutine(LoadRoundWithLoadingScreen(roundsData[round_id], 0).WrapToIl2Cpp());
         }
 
