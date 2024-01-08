@@ -238,6 +238,11 @@ namespace fallguyloadrold
             RuntimeManager.UnloadBank("BNK_SFX_WinnerScreen");
             if (scene.name.Contains("FallGuy_"))
             {
+                if (scene.name != roundsData[NetworkGameData.currentGameOptions_._roundID].SceneName && musicbank != null)
+                {
+                    RuntimeManager.UnloadBank(musicbank);
+                }
+
                 RuntimeManager.LoadBank("BNK_UI_MainMenu");
                 AudioManager.PlayOneShot("MUS_InGame_PreparationPhase");
                 cameraDirector = FindObjectOfType<CameraDirector>();
