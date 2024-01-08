@@ -43,14 +43,27 @@ namespace fallguyloadrold
             }
         }
 
-        public void ShowXtremePopup()
+        public void ShowXtremePopup(int random)
         {
+            string title = null;
+            string message = null;
             Il2CppSystem.Action<bool> quitAction = new System.Action<bool>(CloseGame);
+
+            if (random == 0)
+            {
+                title = "xtreme_title";
+                message = "xtreme_message_insult";
+            }
+            else
+            {
+                title = "fallguys_piracy_title";
+                message = "fallguys_piracy_message";
+            }
 
             ModalMessageData modalMessageData = new ModalMessageData
             {
-                Title = "xtreme_title",
-                Message = "xtreme_message_insult",
+                Title = title,
+                Message = message,
                 ModalType = UIModalMessage.ModalType.MT_OK,
                 OnCloseButtonPressed = quitAction
             };
@@ -122,7 +135,8 @@ namespace fallguyloadrold
                         {
                             if (!xtremePopupOpened)
                             {
-                                ShowXtremePopup();
+                                int randomnumber = UnityEngine.Random.Range(0, 2);
+                                ShowXtremePopup(randomnumber);
                                 xtremePopupOpened = true;
                             }
                         }
