@@ -383,7 +383,8 @@ namespace fallguyloadrold
         [HarmonyPatch(typeof(SubMenuNavigation), "HandleConfigureRequestFailed")]
         [HarmonyPrefix]
         static bool SubMenuNavigationHandleConfigureRequestFailed(SubMenuNavigation __instance)
-        {            
+        {
+            __instance.HideSpinner();
             return false;
         }
 
@@ -393,6 +394,14 @@ namespace fallguyloadrold
         {
             LoaderBehaviour.loaderBehaviour.Win();
             return true;
+        }
+
+        [HarmonyPatch(typeof(PlayerTargetSettings), "GetBool")]
+        [HarmonyPrefix]
+        static bool PlayerTargetSettingsGetBool(string key, ref bool __result)
+        {
+            __result = true;
+            return false;
         }
     }
 }

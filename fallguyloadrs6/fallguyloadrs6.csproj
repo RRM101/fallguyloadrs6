@@ -25,6 +25,9 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepinEx\core\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Catapult.Protocol">
+      <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\Catapult.Protocol.dll</HintPath>
+    </Reference>
     <Reference Include="CMS_Runtime">
       <HintPath>..\..\..\..\Downloads\FallGuysS6BETA\BepInEx\interop\CMS_Runtime.dll</HintPath>
     </Reference>

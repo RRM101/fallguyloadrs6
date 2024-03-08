@@ -460,8 +460,7 @@ namespace fallguyloadrold
         IEnumerator StartPressed(GameObject TitleScreen)
         {
             RuntimeManager.LoadBank("BNK_Music_GP");
-            PlayerTargetSettings.ShowSelectorEnabled = true;
-            PlayerTargetSettings.PrivateLobbiesV2Enabled = true;
+            PlayerTargetSettings.Load();
             CatapultServicesManager servicesManager = FindObjectOfType<CatapultServicesManager>();
             if (!servicesManager._contentService.DoesContentFileExist())
             {
@@ -479,7 +478,6 @@ namespace fallguyloadrold
             }
             GameObject TopLeftGroup = Resources.FindObjectsOfTypeAll<MainMenuViewModel>().FirstOrDefault().transform.GetChild(0).transform.GetChild(3).gameObject;
             PlayerLevelViewModel crownRank = TopLeftGroup.transform.GetChild(0).GetComponent<PlayerLevelViewModel>();
-            crownRank.gameObject.GetComponent<ToggleActiveWithFeatureFlag>()._enableIfFeatureDisabled = true;
             crownRank.gameObject.SetActive(true);
             NameTagViewModel nameTagViewModel = TopLeftGroup.transform.GetChild(1).GetComponent<NameTagViewModel>();
 
