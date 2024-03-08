@@ -129,7 +129,6 @@ namespace fallguyloadrold
                     if (whatisthis)
                     {
                         GUI.Label(new Rect(47f, 185f, 100f, 30f), "Press H");
-                        text = GUI.TextField(new Rect(20f, 100f, 100f, 25f), text);
                     }
                 }
                 else
